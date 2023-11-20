@@ -18,6 +18,7 @@ woodColumns = cp.Variable((xLength,yLength), integer = True)
 steelReinforcedColumns = cp.Variable((xLength,yLength), integer = True)
 
 # create trees
+# TODO: add more trees
 slashPineAcres = cp.Variable(nonneg = True)
 
 # cost calculation
