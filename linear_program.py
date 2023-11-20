@@ -2,6 +2,7 @@ import cvxpy as cp
 
 # 1000 is used a placeholder throughout the document for unknown values
 
+
 # parameters given
 floors = 3 # the number of floors of the building
 xLength = 8 # the length of the building in tiles
