@@ -33,7 +33,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # cost of wood columns
     cost += cp.sum(woodColumns)*1000
     # cost of each tile
-    cost += 1000*tiles*floors
+    cost += 1000*xLength*yLength*floors
     
     # constraints
     constraints = []
