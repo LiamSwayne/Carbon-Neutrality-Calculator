@@ -4,6 +4,9 @@ import cvxpy as cp
 
 # 1000 is used a placeholder throughout the document for unknown values
 
+# info for README.md
+logs = []
+
 # solve linear system
 def calculate(floors=1, xLength=1, yLength=1):
     # floors is the number of floors of the building
@@ -49,13 +52,13 @@ def calculate(floors=1, xLength=1, yLength=1):
     problem = cp.Problem(cp.Maximize(cost), constraints)
     problem.solve(solver=cp.GUROBI,verbose = True)
     
-    print("cost (measured in USD):")
-    print(cost.value)
-    print("\ncolumns (measured in quantity):")
-    print(woodColumns.value)
-    print(steelReinforcedColumns.value)
-    print("\ncarbon offsets (measured in acres):")
-    print(slashPineAcres.value)
+    logs.append("cost (measured in USD):")
+    logs.append(cost.value)
+    logs.append("\ncolumns (measured in quantity):")
+    logs.append(woodColumns.value)
+    logs.append(steelReinforcedColumns.value)
+    logs.append("\ncarbon offsets (measured in acres):")
+    logs.append(slashPineAcres.value)
 
 # get arguments from command line
 if len(sys.argv) == 4:
@@ -71,3 +74,18 @@ else:
     randomYLength = random.randint(1, 10)
     print("Running randomized values: floors=" + str(randomFloors) + " xLength=" + str(randomXLength) + " yLength=" + str(randomYLength))
     calculate(randomFloors, randomXLength, randomYLength)
+
+# only run if it is a test case
+if len(sys.argv) == 5:
+    testCaseNum = int(sys.argv[4])
+
+    # open the README.md file
+    file = open("./README.md", "r")
+    fileContents = file.read()
+
+    # locate case
+    startCaseIndex = fileContents.index("<!-- TEST CASE " + str(testCaseNum) + " -->")
+    endCaseIndex = fileContents.index("<!-- END TEST CASE -->")
+
+    newContents = fileContents[:startCaseIndex]
+    print(newContents)
