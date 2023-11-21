@@ -1,4 +1,4 @@
-name: Run python script
+name: Execute test cases and send to README
 
 on: # run on commits to the main branch
   push:
