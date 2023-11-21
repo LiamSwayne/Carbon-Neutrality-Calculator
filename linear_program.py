@@ -77,7 +77,7 @@ else:
     calculate(randomFloors, randomXLength, randomYLength)
 
 # only run if it is a test case
-# example of a command-line run that updates a test: python "linear_program.py" 1 2 3 1
+# example of a command-line run that updates a test: python3 "linear_program.py" 1 2 3 1
 if len(sys.argv) == 5:
     testCaseNum = int(sys.argv[4])
 
