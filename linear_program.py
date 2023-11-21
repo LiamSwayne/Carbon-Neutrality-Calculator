@@ -29,7 +29,11 @@ def calculate(floors=1, xLength=1, yLength=1):
     
     # cost calculation
     # page 3 of https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf for slash pine cost per acre
-    cost = slashPineAcres*(55+110) + cp.sum(woodColumns)*1000
+    cost = slashPineAcres*(55+110)
+    # cost of wood columns
+    cost += cp.sum(woodColumns)*1000
+    # cost of each tile
+    cost += 1000*tiles*floors
     
     # constraints
     constraints = []
