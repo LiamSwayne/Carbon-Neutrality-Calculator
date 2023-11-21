@@ -53,7 +53,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     constraints.append(steelReinforcedColumns >= 0)
     
     # create and solve problem
-    problem = cp.Problem(cp.Maximize(cost), constraints)
+    problem = cp.Problem(cp.Minimize(cost), constraints)
     problem.solve(verbose = True)
     
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " tile x length, " + str(yLength) + " tile y length.")
