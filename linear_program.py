@@ -52,6 +52,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     problem = cp.Problem(cp.Maximize(cost), constraints)
     problem.solve(solver=cp.GUROBI,verbose = True)
     
+    logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " tile x length, " + str(yLength) + " tile y length.")
     logs.append("cost (measured in USD):")
     logs.append(cost.value)
     logs.append("\ncolumns (measured in quantity):")
@@ -61,7 +62,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append(slashPineAcres.value)
 
 # get arguments from command line
-if len(sys.argv) == 4:
+if len(sys.argv) == 4 or len(sys.argv) == 5:
     # extract command-line arguments
     floors = int(sys.argv[1])
     xLength = int(sys.argv[2])
@@ -85,7 +86,18 @@ if len(sys.argv) == 5:
 
     # locate case
     startCaseIndex = fileContents.index("<!-- TEST CASE " + str(testCaseNum) + " -->")
-    endCaseIndex = fileContents.index("<!-- END TEST CASE -->")
+    endCaseIndex = fileContents[startCaseIndex:].index("<!-- END TEST CASE -->") + startCaseIndex
 
     newContents = fileContents[:startCaseIndex]
-    print(newContents)
+    newContents += "<!-- TEST CASE " + str(testCaseNum) + " -->" # add test case indicator
+    newContents += "\n```python" # add markdown code start
+    for i in range(len(logs)):
+        newContents += "\n" + str(logs[i]) # add log
+    newContents += "\n```" # add markdown code end
+    newContents += "\n" + fileContents[endCaseIndex:]
+    file.close()
+
+    # writing updated content to file
+    file = open("./README.md", "w")
+    file.write(newContents)
+    file.close()
