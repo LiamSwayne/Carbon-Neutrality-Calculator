@@ -68,4 +68,4 @@ else:
     randomFloors = random.randint(1, 10)
     randomXLength = random.randint(1, 10)
     randomYLength = random.randint(1, 10)
-    print("Running randomized values: floors=" + randomFloors + " xLength=" + randomXLength + " yLength=" + randomYLength)
+    print("Running randomized values: floors=" + str(randomFloors) + " xLength=" + str(randomXLength) + " yLength=" + str(randomYLength))
