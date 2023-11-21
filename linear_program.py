@@ -1,8 +1,11 @@
+import sys
+import random
 import cvxpy as cp
 
 # 1000 is used a placeholder throughout the document for unknown values
 
-def calculcate(floors, xLength, yLength):
+# solve linear system
+def calculcate(floors=1, xLength=1, yLength=1):
     # floors is the number of floors of the building
     # xLength is the length of the building in tiles
     # yLength is the width of the building in tiles
@@ -53,3 +56,16 @@ def calculcate(floors, xLength, yLength):
     print(steelReinforcedColumns.value)
     print("\ncarbon offsets (measured in acres):")
     print(slashPineAcres.value)
+
+# get arguments from command line
+if len(sys.argv) == 4:
+    # extract command-line arguments
+    floors = int(sys.argv[1])
+    xLength = int(sys.argv[2])
+    yLength = int(sys.argv[3])
+else:
+    print("Invalid command-line arguments. Follow this format: python script.py floors xLength yLength")
+    randomFloors = random.randint(1, 10)
+    randomXLength = random.randint(1, 10)
+    randomYLength = random.randint(1, 10)
+    print("Running randomized values: floors=" + randomFloors + " xLength=" + randomXLength + " yLength=" + randomYLength)
