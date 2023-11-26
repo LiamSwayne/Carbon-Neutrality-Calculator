@@ -41,7 +41,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     cost += cp.sum(steelColumns)*64.90
     # cost of each square meter tile from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556
     # we buy 3 boards at 54.30, and divide by 2.93392603407 to get the cost per square meter tile
-    # weight of each square meter of subfloor excludes foundation, reducing floor count by 1 
+    # weight of each square meter of subfloor excludes foundation, reducing floor count by 1
     cost += 55.5228721203*xLength*yLength*(floors-1)
     
     # constraints
@@ -51,7 +51,9 @@ def calculate(floors=1, xLength=1, yLength=1):
     # aluminum and steel column figures from https://www.wesa.fm/development-transportation/2017-08-31/aluminum-production-leaves-a-big-carbon-footprint-so-alcoa-is-adapting-with-sustainable-products#:~:text=For%20each%20ton%20of%20steel%20produced%2C%202%20tons%20of%20carbon%20is%20emitted.%20And%20for%20each%20ton%20of%20aluminum%2C%20the%20worldwide%20average%20is%2011.7%20tons%20of%20carbon%20emitted
     # each aluminum column is 30 pounds, equivalent to 0.0136078, and 0.0136078*11.7 = 0.15921126
     # each steel column is 35 pounds, equivalent to 0.0158757, and 0.0158757*2 = 0.0317514
-    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 - slashPineAcres*1000 <= 0)
+    # slash pine carbon absorbtion per acre from https://extension.psu.edu/carbon-accounting-in-forest-management#:~:text=100%2C000%20pounds%20carbon%20per%20acre%20%C3%B7%2045,tons%20of%20CO2%20emissions%20avoided
+    # 3.69 metric tons x 45 years is 166.05 metric tons in total
+    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 - slashPineAcres*166.05 <= 0)
     
     # columns supporting each floor
     # aluminum column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
