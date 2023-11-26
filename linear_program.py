@@ -23,7 +23,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     tileWeight = 1000
     
     # create columns
-    woodColumns = cp.Variable((xLength,yLength), integer = True)
+    aluminumColumns = cp.Variable((xLength,yLength), integer = True)
     steelColumns = cp.Variable((xLength,yLength), integer = True)
     
     # create trees
@@ -31,10 +31,10 @@ def calculate(floors=1, xLength=1, yLength=1):
     slashPineAcres = cp.Variable(integer = True)
     
     # cost calculation (measured in USD)
-    # page 3 of https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf for slash pine cost per acre
+    # page 3 of https://bugaluminumcloud.org/bugaluminum/productivity/pdfs/SeriesPaper5.pdf for slash pine cost per acre
     cost = slashPineAcres*(55+110)
-    # cost of wood columns from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907
-    cost += cp.sum(woodColumns)*278
+    # cost of aluminum columns from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907
+    cost += cp.sum(aluminumColumns)*278
     # cost of steel columns from https://web.archive.org/web/20161210125922/http://www.homedepot.com:80/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528
     cost += cp.sum(steelColumns)*64.90
     # cost of each square-meter tile from https://www.forbes.com/home-improvement/home/cost-to-add-second-story/#:~:text=average%20of%20%24100%20to%20%24300%20per%20square%20foot
@@ -45,19 +45,20 @@ def calculate(floors=1, xLength=1, yLength=1):
     constraints = []
     
     # CO2 constraint measured in metric tons
-    # slash pine figure from https://extension.psu.edu/carbon-accounting-in-forest-management#:~:text=100%2C000%20pounds%20carbon%20per%20acre%20%C3%B7%2045,tons%20of%20CO2%20emissions%20avoided
-    # steel column figure from https://www.mdpi.com/1996-1073/6/11/5609#:~:text=As%20shown%20in%20Figure%205%2C%20the,in%20Yeo%20and%20Potra%20%5B18%5D.
-    constraints.append(cp.sum(steelColumns)*485 + cp.sum(woodColumns)*1000 - slashPineAcres*166.05 <= 0)
+    # aluminum and steel column figures from https://www.wesa.fm/development-transportation/2017-08-31/aluminum-production-leaves-a-big-carbon-footprint-so-alcoa-is-adapting-with-sustainable-products#:~:text=For%20each%20ton%20of%20steel%20produced%2C%202%20tons%20of%20carbon%20is%20emitted.%20And%20for%20each%20ton%20of%20aluminum%2C%20the%20worldwide%20average%20is%2011.7%20tons%20of%20carbon%20emitted
+    # each aluminum column is 30 pounds, equivalent to 0.0136078, and 0.0136078*11.7 = 0.15921126
+    # each steel column is 35 pounds, equivalent to 0.0158757, and 0.0158757*2 = 0.0317514
+    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 - slashPineAcres*166.05 <= 0)
     
     # columns supporting each floor
-    # wood column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
+    # aluminum column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
     # 21000 pounds has been converted to metric tons
     # steel column support figure from https://www.homedepot.com/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528#:~:text=maximum%20extension%20(lb.)-,11200%20lb,-Maximum%20load%20at
     # 11200 pounds has been converted to metric tons
-    constraints.append(cp.sum(woodColumns)*9.5254398 + cp.sum(steelColumns)*5.0802345 >= floors*tileWeight)
+    constraints.append(cp.sum(aluminumColumns)*0.0317514 + cp.sum(steelColumns)*5.0802345 >= floors*tileWeight)
     
     # nonnegativity
-    constraints.append(woodColumns >= 0)
+    constraints.append(aluminumColumns >= 0)
     constraints.append(steelColumns >= 0)
     constraints.append(slashPineAcres >= 0)
     
@@ -68,7 +69,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " tile x length, " + str(yLength) + " tile y length.")
     logs.append("\nCost (measured in USD): $" + str(round(cost.value, 2)))
     logs.append("\ncolumns (measured in quantity):")
-    logs.append("Wood columns needed: "+str(cp.sum(woodColumns.value)))
+    logs.append("aluminum columns needed: "+str(cp.sum(aluminumColumns.value)))
     logs.append("Steel columns needed: "+str(cp.sum(steelColumns.value)))
     logs.append("\nCarbon offsets (measured in acres):")
     logs.append("Slash pine acres: " + str(slashPineAcres.value))
