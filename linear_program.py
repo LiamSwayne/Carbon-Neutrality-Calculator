@@ -19,7 +19,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # create building layout
     tiles = cp.Variable((xLength,yLength), integer = True)
     
-    # weight of each tile ceiling
+    # weight of each tile used on each floor
     tileWeight = 1000
     
     # create columns
