@@ -12,7 +12,7 @@ logs = []
 
 # simple matrix sum function
 def sumMatrix(matrix):
-    return sum(sum(row) for row in matrix)
+    return int(sum(sum(row) for row in matrix))
 
 
 # solve linear system
