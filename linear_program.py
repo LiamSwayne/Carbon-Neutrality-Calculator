@@ -63,7 +63,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " tile x length, " + str(yLength) + " tile y length.")
     logs.append("cost (measured in USD):")
-    logs.append(cost.value)
+    logs.append("$" + str(round(cost.value, 2)))
     logs.append("\ncolumns (measured in quantity):")
     logs.append("Wood columns:\n"+str(cp.sum(woodColumns.value)))
     logs.append("Steel columns:\n"+str(cp.sum(steelColumns.value)))
