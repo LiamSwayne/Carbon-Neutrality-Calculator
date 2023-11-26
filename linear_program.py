@@ -1,5 +1,8 @@
+# import built-in
 import sys
 import random
+
+# import external libraries
 import cvxpy as cp
 
 # 1000 is used a placeholder throughout the document for unknown values
