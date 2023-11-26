@@ -13,8 +13,8 @@ logs = []
 # solve linear system
 def calculate(floors=1, xLength=1, yLength=1):
     # floors is the number of floors of the building
-    # xLength is the length of the building in tiles
-    # yLength is the width of the building in tiles
+    # xLength is the length of the building in square-meter tiles
+    # yLength is the width of the building in square-meter tiles
     
     # create building layout
     tiles = cp.Variable((xLength,yLength), integer = True)
@@ -33,12 +33,13 @@ def calculate(floors=1, xLength=1, yLength=1):
     # cost calculation (measured in USD)
     # page 3 of https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf for slash pine cost per acre
     cost = slashPineAcres*(55+110)
-    # cost of wood columns
+    # cost of wood columns from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907
     cost += cp.sum(woodColumns)*278
-    # cost of steel columns
+    # cost of steel columns from https://web.archive.org/web/20161210125922/http://www.homedepot.com:80/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528
     cost += cp.sum(steelColumns)*64.90
-    # cost of each tile
-    cost += 1000*xLength*yLength*floors
+    # cost of each square-meter tile from https://www.forbes.com/home-improvement/home/cost-to-add-second-story/#:~:text=average%20of%20%24100%20to%20%24300%20per%20square%20foot
+    # middle figure of 200/square-foot taken, 200*10.7639 is the cost for a square-meter tile
+    cost += 2152.78*xLength*yLength*floors
     
     # constraints
     constraints = []
