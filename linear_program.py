@@ -50,8 +50,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     cost += cp.sum(steelColumns)*64.90
     # cost of each square meter tile from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556
     # we buy 3 boards at 54.30, and divide by 2.93392603407 to get the cost per square meter tile
-    # weight of each square meter of subfloor excludes foundation, reducing floor count by 1
-    cost += 55.5228721203*xLength*yLength*(floors-1)
+    cost += 55.5228721203*xLength*yLength*floors
     
     # constraints
     constraints = []
