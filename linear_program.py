@@ -21,8 +21,12 @@ def calculate(floors=1, xLength=1, yLength=1):
     # converted 7.989*3.953 feet to 2.93392603407 square meters
     # weight of a 4x8 board with 5/8 inch thickness is 53 pounds, which converts to 0.0240404
     # we assume three layers of boards are used, amounting to 0.0721212
-    # divide 0.0721212/2.93392603407 square meters for weight per square meter of 
+    # divide 0.0721212/2.93392603407 square meters for weight per square meter of 0.02458180579
     subflooringTileWeight = 0.02458180579
+
+    # floor weight based on corridor measurement from https://www.researchgate.net/figure/Total-weight-for-each-floor_tbl1_231000789
+    # conversion to weight per square meter is 0.5674154216
+    floorWeight = 0.5674154216
     
     # create columns
     aluminumColumns = cp.Variable((xLength,yLength), integer = True)
@@ -60,7 +64,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # 21000 pounds has been converted to metric tons
     # steel column support figure from https://www.homedepot.com/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528#:~:text=maximum%20extension%20(lb.)-,11200%20lb,-Maximum%20load%20at
     # 11200 pounds has been converted to metric tons
-    constraints.append(cp.sum(aluminumColumns)*0.0317514 + cp.sum(steelColumns)*5.0802345 >= (floors-1)*subflooringTileWeight)
+    constraints.append(cp.sum(aluminumColumns)*0.0317514 + cp.sum(steelColumns)*5.0802345 >= (floors-1)*(subflooringTileWeight+floorWeight))
     
     # nonnegativity
     constraints.append(aluminumColumns >= 0)
