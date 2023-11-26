@@ -13,14 +13,16 @@ logs = []
 # solve linear system
 def calculate(floors=1, xLength=1, yLength=1):
     # floors is the number of floors of the building
-    # xLength is the length of the building in square-meter tiles
-    # yLength is the width of the building in square-meter tiles
+    # xLength is the length of the building in square meter tiles
+    # yLength is the width of the building in square meter tiles
     
-    # create building layout
-    tiles = cp.Variable((xLength,yLength), integer = True)
-    
-    # weight of each tile used on each floor
-    tileWeight = 1000
+    # weight of each square meter of subfloor
+    # figure from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556#:~:text=Actual%20Length%20(Feet)-,7.989,-Common%20Thickness%20Measurement
+    # converted 7.989*3.953 feet to 2.93392603407 square meters
+    # weight of a 4x8 board with 5/8 inch thickness is 53 pounds, which converts to 0.0240404
+    # we assume three layers of boards are used, amounting to 0.0721212
+    # divide 0.0721212/2.93392603407 square meters for weight per square meter of 
+    subflooringTileWeight = 0.02458180579
     
     # create columns
     aluminumColumns = cp.Variable((xLength,yLength), integer = True)
@@ -31,15 +33,16 @@ def calculate(floors=1, xLength=1, yLength=1):
     slashPineAcres = cp.Variable(integer = True)
     
     # cost calculation (measured in USD)
-    # page 3 of https://bugaluminumcloud.org/bugaluminum/productivity/pdfs/SeriesPaper5.pdf for slash pine cost per acre
+    # page 3 of https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf for slash pine cost per acre
     cost = slashPineAcres*(55+110)
     # cost of aluminum columns from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907
     cost += cp.sum(aluminumColumns)*278
     # cost of steel columns from https://web.archive.org/web/20161210125922/http://www.homedepot.com:80/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528
     cost += cp.sum(steelColumns)*64.90
-    # cost of each square-meter tile from https://www.forbes.com/home-improvement/home/cost-to-add-second-story/#:~:text=average%20of%20%24100%20to%20%24300%20per%20square%20foot
-    # middle figure of 200/square-foot taken, 200*10.7639 is the cost for a square-meter tile
-    cost += 2152.78*xLength*yLength*floors
+    # cost of each square meter tile from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556
+    # we buy 3 boards at 54.30, and divide by 2.93392603407 to get the cost per square meter tile
+    # weight of each square meter of subfloor excludes foundation, reducing floor count by 1 
+    cost += 55.5228721203*xLength*yLength*(floors-1)
     
     # constraints
     constraints = []
@@ -55,7 +58,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # 21000 pounds has been converted to metric tons
     # steel column support figure from https://www.homedepot.com/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528#:~:text=maximum%20extension%20(lb.)-,11200%20lb,-Maximum%20load%20at
     # 11200 pounds has been converted to metric tons
-    constraints.append(cp.sum(aluminumColumns)*0.0317514 + cp.sum(steelColumns)*5.0802345 >= floors*tileWeight)
+    constraints.append(cp.sum(aluminumColumns)*0.0317514 + cp.sum(steelColumns)*5.0802345 >= (floors-1)*subflooringTileWeight)
     
     # nonnegativity
     constraints.append(aluminumColumns >= 0)
@@ -68,9 +71,9 @@ def calculate(floors=1, xLength=1, yLength=1):
     
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " tile x length, " + str(yLength) + " tile y length.")
     logs.append("\nCost (measured in USD): $" + str(round(cost.value, 2)))
-    logs.append("\ncolumns (measured in quantity):")
-    logs.append("aluminum columns needed: "+str(cp.sum(aluminumColumns.value)))
-    logs.append("Steel columns needed: "+str(cp.sum(steelColumns.value)))
+    logs.append("\nColumns (measured in quantity):")
+    logs.append("Aluminum columns needed: "+str(sum(sum(aluminumColumns.value, []))))
+    logs.append("Steel columns needed: "+str(sum(sum(steelColumns.value, []))))
     logs.append("\nCarbon offsets (measured in acres):")
     logs.append("Slash pine acres: " + str(slashPineAcres.value))
 
