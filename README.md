@@ -9,8 +9,8 @@ Parameters given: 3 floor, 4 tile x length, 10 tile y length.
 Cost (measured in USD): $6892.64
 
 Columns (measured in quantity):
-Aluminum columns needed: 0.0
-Steel columns needed: 1.0
+Aluminum columns needed: 0
+Steel columns needed: 1
 
 Carbon offsets (measured in acres):
 Slash pine acres: 1.0
@@ -24,8 +24,8 @@ Parameters given: 5 floor, 2 tile x length, 3 tile y length.
 Cost (measured in USD): $1895.59
 
 Columns (measured in quantity):
-Aluminum columns needed: 0.0
-Steel columns needed: 1.0
+Aluminum columns needed: 0
+Steel columns needed: 1
 
 Carbon offsets (measured in acres):
 Slash pine acres: 1.0
@@ -39,8 +39,8 @@ Parameters given: 1 floor, 10 tile x length, 10 tile y length.
 Cost (measured in USD): $5552.29
 
 Columns (measured in quantity):
-Aluminum columns needed: 0.0
-Steel columns needed: 0.0
+Aluminum columns needed: 0
+Steel columns needed: 0
 
 Carbon offsets (measured in acres):
 Slash pine acres: -0.0
