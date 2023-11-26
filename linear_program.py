@@ -49,9 +49,12 @@ def calculate(floors=1, xLength=1, yLength=1):
     # steel column figure from https://www.mdpi.com/1996-1073/6/11/5609#:~:text=As%20shown%20in%20Figure%205%2C%20the,in%20Yeo%20and%20Potra%20%5B18%5D.
     constraints.append(cp.sum(steelColumns)*485 + cp.sum(woodColumns)*1000 - slashPineAcres*166.05 <= 0)
     
-    # columns supporting each tile
-    # steelColumn support figure from https://www.homedepot.com/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528#:~:text=maximum%20extension%20(lb.)-,11200%20lb,-Maximum%20load%20at
-    constraints.append(cp.sum(woodColumns)*1000 + cp.sum(steelColumns)*5.0802345 >= floors*tileWeight)
+    # columns supporting each floor
+    # wood column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
+    # 21000 pounds has been converted to metric tons
+    # steel column support figure from https://www.homedepot.com/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528#:~:text=maximum%20extension%20(lb.)-,11200%20lb,-Maximum%20load%20at
+    # 11200 pounds has been converted to metric tons
+    constraints.append(cp.sum(woodColumns)*9.5254398 + cp.sum(steelColumns)*5.0802345 >= floors*tileWeight)
     
     # nonnegativity
     constraints.append(woodColumns >= 0)
@@ -63,12 +66,12 @@ def calculate(floors=1, xLength=1, yLength=1):
     problem.solve(verbose = True)
     
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " tile x length, " + str(yLength) + " tile y length.")
-    logs.append("cost (measured in USD): $" + str(round(cost.value, 2)))
+    logs.append("\nCost (measured in USD): $" + str(round(cost.value, 2)))
     logs.append("\ncolumns (measured in quantity):")
     logs.append("Wood columns needed: "+str(cp.sum(woodColumns.value)))
     logs.append("Steel columns needed: "+str(cp.sum(steelColumns.value)))
-    logs.append("\ncarbon offsets (measured in acres):")
-    logs.append("Slash pine acres" + str(slashPineAcres.value))
+    logs.append("\nCarbon offsets (measured in acres):")
+    logs.append("Slash pine acres: " + str(slashPineAcres.value))
 
 # get arguments from command line
 if len(sys.argv) == 4 or len(sys.argv) == 5:
