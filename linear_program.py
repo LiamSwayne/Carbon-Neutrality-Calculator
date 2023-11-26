@@ -33,7 +33,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     slashPineAcres = cp.Variable(integer = True)
     
     # cost calculation (measured in USD)
-    # page 3 of https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf for slash pine cost per acre
+    # page 3 of https://web.archive.org/web/20231126224531id_/https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf for slash pine cost per acre
     cost = slashPineAcres*(55+110)
     # cost of aluminum columns from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907
     cost += cp.sum(aluminumColumns)*278
@@ -72,6 +72,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " tile x length, " + str(yLength) + " tile y length.")
     logs.append("\nCost (measured in USD): $" + str(round(cost.value, 2)))
     logs.append("\nColumns (measured in quantity):")
+    # get matrix values, flatten the matrix, and sum the values
     logs.append("Aluminum columns needed: "+str(sum(sum(aluminumColumns.value, []))))
     logs.append("Steel columns needed: "+str(sum(sum(steelColumns.value, []))))
     logs.append("\nCarbon offsets (measured in acres):")
