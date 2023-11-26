@@ -10,6 +10,11 @@ import cvxpy as cp
 # info for README.md
 logs = []
 
+# simple matrix sum function
+def sumMatrix(matrix):
+    return sum(sum(row) for row in matrix)
+
+
 # solve linear system
 def calculate(floors=1, xLength=1, yLength=1):
     # floors is the number of floors of the building
@@ -78,8 +83,8 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " tile x length, " + str(yLength) + " tile y length.")
     logs.append("\nCost (measured in USD): $" + str(round(cost.value, 2)))
     logs.append("\nColumns (measured in quantity):")
-    logs.append("Aluminum columns needed: "+str(aluminumColumns.value))
-    logs.append("Steel columns needed: "+str(steelColumns.value))
+    logs.append("Aluminum columns needed: "+str(sumMatrix(aluminumColumns.value)))
+    logs.append("Steel columns needed: "+str(sumMatrix(steelColumns.value)))
     logs.append("\nCarbon offsets (measured in acres):")
     logs.append("Slash pine acres: " + str(slashPineAcres.value))
 
