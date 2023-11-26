@@ -28,7 +28,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     
     # create trees
     # TODO: add more trees
-    slashPineAcres = cp.Variable(nonneg = True)
+    slashPineAcres = cp.Variable(integer = True)
     
     # cost calculation (measured in USD)
     # page 3 of https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf for slash pine cost per acre
@@ -56,6 +56,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # nonnegativity
     constraints.append(woodColumns >= 0)
     constraints.append(steelColumns >= 0)
+    constraints.append(slashPineAcres >= 0)
     
     # create and solve problem
     problem = cp.Problem(cp.Minimize(cost), constraints)
@@ -67,7 +68,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Wood columns needed: "+str(cp.sum(woodColumns.value)))
     logs.append("Steel columns needed: "+str(cp.sum(steelColumns.value)))
     logs.append("\ncarbon offsets (measured in acres):")
-    logs.append(slashPineAcres.value)
+    logs.append("Slash pine acres" + str(slashPineAcres.value))
 
 # get arguments from command line
 if len(sys.argv) == 4 or len(sys.argv) == 5:
