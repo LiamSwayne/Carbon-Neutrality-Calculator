@@ -72,8 +72,8 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " tile x length, " + str(yLength) + " tile y length.")
     logs.append("\nCost (measured in USD): $" + str(round(cost.value, 2)))
     logs.append("\ncolumns (measured in quantity):")
-    logs.append("aluminum columns needed: "+str(cp.sum(aluminumColumns.value)))
-    logs.append("Steel columns needed: "+str(cp.sum(steelColumns.value)))
+    logs.append("aluminum columns needed: "+str(cp.sum(aluminumColumns)))
+    logs.append("Steel columns needed: "+str(cp.sum(steelColumns)))
     logs.append("\nCarbon offsets (measured in acres):")
     logs.append("Slash pine acres: " + str(slashPineAcres.value))
 
