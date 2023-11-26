@@ -19,7 +19,6 @@ def calculate(floors=1, xLength=1, yLength=1):
     # weight of each square meter of subfloor
     # figure from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556#:~:text=Actual%20Length%20(Feet)-,7.989,-Common%20Thickness%20Measurement
     # converted 7.989*3.953 feet to 2.93392603407 square meters
-    # cost is assumed to scale proportionally to size
     # weight of a 4x8 board with 5/8 inch thickness is 53 pounds, which converts to 0.0240404
     # we assume three layers of boards are used, amounting to 0.0721212
     # divide 0.0721212/2.93392603407 square meters for weight per square meter of 
@@ -40,10 +39,10 @@ def calculate(floors=1, xLength=1, yLength=1):
     cost += cp.sum(aluminumColumns)*278
     # cost of steel columns from https://web.archive.org/web/20161210125922/http://www.homedepot.com:80/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528
     cost += cp.sum(steelColumns)*64.90
-    # cost of each square meter tile from https://www.forbes.com/home-improvement/home/cost-to-add-second-story/#:~:text=average%20of%20%24100%20to%20%24300%20per%20square%20foot
-    # average figure of 200/square foot taken, 200*10.7639 is the cost for a square meter tile
-    # weight of each square meter of subfloor excludes foundation, reducing floor count by 1
-    cost += 2152.78*xLength*yLength*(floors-1)
+    # cost of each square meter tile from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556
+    # we buy 3 boards at 54.30, and divide by 2.93392603407 to get the cost per square meter tile
+    # weight of each square meter of subfloor excludes foundation, reducing floor count by 1 
+    cost += 55.5228721203*xLength*yLength*(floors-1)
     
     # constraints
     constraints = []
