@@ -9,14 +9,8 @@ Parameters given: 3 floor, 4 tile x length, 10 tile y length.
 Cost (measured in USD): $4671.73
 
 columns (measured in quantity):
-aluminum columns needed: Sum([[-0.00 -0.00 ... -0.00 -0.00]
- [-0.00 -0.00 ... -0.00 -0.00]
- [-0.00 -0.00 ... -0.00 -0.00]
- [-0.00 -0.00 ... -0.00 -0.00]], None, False)
-Steel columns needed: Sum([[1.00 -0.00 ... -0.00 -0.00]
- [-0.00 -0.00 ... -0.00 -0.00]
- [-0.00 -0.00 ... -0.00 -0.00]
- [-0.00 -0.00 ... -0.00 -0.00]], None, False)
+aluminum columns needed: Sum(var1, None, False)
+Steel columns needed: Sum(var2, None, False)
 
 Carbon offsets (measured in acres):
 Slash pine acres: 1.0
@@ -30,10 +24,8 @@ Parameters given: 5 floor, 2 tile x length, 3 tile y length.
 Cost (measured in USD): $1562.45
 
 columns (measured in quantity):
-aluminum columns needed: Sum([[-0.00 -0.00 -0.00]
- [-0.00 -0.00 -0.00]], None, False)
-Steel columns needed: Sum([[1.00 -0.00 -0.00]
- [-0.00 -0.00 -0.00]], None, False)
+aluminum columns needed: Sum(var1, None, False)
+Steel columns needed: Sum(var2, None, False)
 
 Carbon offsets (measured in acres):
 Slash pine acres: 1.0
@@ -47,16 +39,8 @@ Parameters given: 1 floor, 10 tile x length, 10 tile y length.
 Cost (measured in USD): $0.0
 
 columns (measured in quantity):
-aluminum columns needed: Sum([[-0.00 -0.00 ... -0.00 -0.00]
- [-0.00 -0.00 ... -0.00 -0.00]
- ...
- [-0.00 -0.00 ... -0.00 -0.00]
- [-0.00 -0.00 ... -0.00 -0.00]], None, False)
-Steel columns needed: Sum([[-0.00 -0.00 ... -0.00 -0.00]
- [-0.00 -0.00 ... -0.00 -0.00]
- ...
- [-0.00 -0.00 ... -0.00 -0.00]
- [-0.00 -0.00 ... -0.00 -0.00]], None, False)
+aluminum columns needed: Sum(var1, None, False)
+Steel columns needed: Sum(var2, None, False)
 
 Carbon offsets (measured in acres):
 Slash pine acres: -0.0
