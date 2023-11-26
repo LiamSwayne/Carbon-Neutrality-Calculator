@@ -65,8 +65,8 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("cost (measured in USD):")
     logs.append(cost.value)
     logs.append("\ncolumns (measured in quantity):")
-    logs.append("Wood columns:\n"+str(woodColumns.value))
-    logs.append("Steel columns:\n"+str(steelColumns.value))
+    logs.append("Wood columns:\n"+str(cp.sum(woodColumns.value)))
+    logs.append("Steel columns:\n"+str(cp.sum(steelColumns.value)))
     logs.append("\ncarbon offsets (measured in acres):")
     logs.append(slashPineAcres.value)
 
