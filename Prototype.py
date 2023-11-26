@@ -12,12 +12,28 @@ columns_per_floor=[1,2,3]
 columns_pos=[]
 cp.Variable(3, integer=True)
 constraints=[]
+M=1000
+e=0.5
 for i in range(floor_count):
     columns_pos.append([])
     for j in columns_per_floor[i]:
-        x = cp.Variable(1,integer=True)
-        y = cp.Variable(1,integer=True)
-        columns_pos[i].append((x,y))
+        pos = cp.Variable(2,integer=True)
+        for (y,x) in columns_pos[i]:
+            #constraints to create the boolean variables
+            b=cp.Variable(3,integer=True)
+            constraints.append(b[0]>=0)
+            constraints.append(b[0]<=1)
+            constraints.append(b[1]>=0)
+            constraints.append(b[1]<=1)
+            constraints.append(b[2]>=0)
+            constraints.append(b[2]<=1)
+            xdiff=0
+            ydiff=0
+            #constraints to ensure different y positions
+            constraints.append(xdiff>=0-M*b)
+            #constraints to ensure different x positions
+            constraints.append(ydiff>=0-M*(1-b))
+        columns_pos[i].append(pos)
         #constraints to verify that the column connects to both the current floor and the floor it's supporting.
-        constraints.append(dimensions[i][y][x]==1)
-        constraints.append(dimensions[i+1][y][x]==1)
+        constraints.append(dimensions[i][pos[0]][pos[1]]==1)
+        constraints.append(dimensions[i+1][pos[0]][pos[1]]==1)
