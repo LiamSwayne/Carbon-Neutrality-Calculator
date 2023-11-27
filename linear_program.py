@@ -46,7 +46,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     cost += cp.sum(steelColumns)*64.90
     # cost of each square meter tile from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556
     # we buy 3 boards at 54.30, and divide by 2.93392603407 to get the cost per square meter tile
-    cost += 55.5228721203*xLength*yLength*floors
+    cost += 3*54.3/2.93392603407*xLength*yLength*floors
     # cost of oak tree saplings per acre
     # 50 trees per acre from the lowest figure from page 1 of https://www.in.gov/dnr/forestry/files/underplantingoak.pdf,
     # priced at 18.99 each from https://sequoiatrees.com/products/valley-oak-medium-tree-seedling?variant=30222711062591&currency=USD
