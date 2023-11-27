@@ -63,7 +63,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # 3.69 metric tons times 45 years is 166.05 metric tons in total
     # the carbon emissions of a typical office building per square meter from https://www.environmentenergyleader.com/2007/10/epa-tool-estimates-greenhouse-gas-emissions-of-commercial-buildings/#:~:text=a%20look%20at%20a%20typical%20office%20building%20in%20the%20New%20England%20region%20shows%20that%20the%20building%20contributes%2020%20pounds%20of%20CO2%20per%20square%20foot
     # 10.7639 square feet in a square meter time 20 pounds per square foot, converting the output to metric tons, gives 0.0976484582 metric tons
-    # oak tree carbon absorbtion per acre from https://www.greenereveryday.co.uk/carbon-offsetting#:~:text=The%204.5%20tons%20of%20C%20in%20the%20Oak%20tree%20has%20required%20the%20sequestration%20of%2016.5%20tons%20of%20CO2.%20Spread%20over%20100%20years
+    # oak tree carbon absorbtion per tree from https://www.greenereveryday.co.uk/carbon-offsetting#:~:text=The%204.5%20tons%20of%20C%20in%20the%20Oak%20tree%20has%20required%20the%20sequestration%20of%2016.5%20tons%20of%20CO2.%20Spread%20over%20100%20years
     # 16.5 metric tons of CO2 absorbed per oak tree
     # 50 oak trees fit on one acre, taking the lowest figure from page 1 of https://www.in.gov/dnr/forestry/files/underplantingoak.pdf
     # 16.5*50 is 825 total metric tons absorbed per acre over 100 years
