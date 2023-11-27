@@ -53,13 +53,12 @@ def calculate(floors=1, xLength=1, yLength=1):
     cost += 50*18.99*oakTreeAcres
     # slash pine cost per acre from page 3 of https://web.archive.org/web/20231126224531id_/https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf
     cost += slashPineAcres*(55+110)
-    # asphalt parking lot cost of 2$ per square foot from https://www.miconcrete.org/concrete-parking-lot-and-your-business
-    # 15 square meters are in a parking space and 162 feet is approximately 15 square meters, so the cost is 324 dollars per space.
-    cost += ((xLength*yLength*floors)/9)*324
     #eucalyptus density is assumed to be identical to oak density at 50 trees per acre from https://www.in.gov/dnr/forestry/files/underplantingoak.pdf
     # cost is 8.99 each from https://sequoiatrees.com/products/rainbow-eucalyptus-mini-grow-kit
     cost += 50*8.99*eucalyptusTreeAcres
-
+    # asphalt parking lot cost of 2$ per square foot from https://www.miconcrete.org/concrete-parking-lot-and-your-business
+    # 15 square meters are in a parking space and 162 feet is approximately 15 square meters, so the cost is 324 dollars per space.
+    cost += ((xLength*yLength*floors)/9)*324
     
     # constraints
     constraints = []
@@ -113,7 +112,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Oak tree acres: " + str(abs(oakTreeAcres.value)))
     logs.append("Slash pine acres: " + str(abs(slashPineAcres.value)))
     logs.append("Eucalyptus tree acres: " + str(abs(eucalyptusTreeAcres.value)))
-    logs.append("number of parking spaces needed: " + str(int(xLength*yLength*floors/9)))
+    logs.append("Number of parking spaces needed: " + str(int(xLength*yLength*floors/9)))
 
 # get arguments from command line
 if len(sys.argv) == 4 or len(sys.argv) == 5:
@@ -131,7 +130,7 @@ else:
     calculate(randomFloors, randomXLength, randomYLength)
 
 # only run if it is a test case
-# example of a command-line run that updates a test: python3 "linear_program.py" 1 2 3 1
+# example of a command-line run that updates a test: python3 "linear_program.py" 4 20 30 1
 if len(sys.argv) == 5:
     testCaseNum = int(sys.argv[4])
 
