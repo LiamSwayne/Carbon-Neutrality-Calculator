@@ -35,14 +35,12 @@ def calculate(floors=1, xLength=1, yLength=1):
     steelColumns = cp.Variable((xLength,yLength), integer = True)
     
     # create trees
-    oakTreeAcres = cp.variable()
+    oakTreeAcres = cp.Variable()
     slashPineAcres = cp.Variable()
     
     # cost calculation (measured in USD)
-    # slash pine cost per acre from page 3 of https://web.archive.org/web/20231126224531id_/https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf
-    cost = slashPineAcres*(55+110)
     # cost of aluminum columns from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907
-    cost += cp.sum(aluminumColumns)*278
+    cost = cp.sum(aluminumColumns)*278
     # cost of steel columns from https://web.archive.org/web/20161210125922/http://www.homedepot.com:80/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528
     cost += cp.sum(steelColumns)*64.90
     # cost of each square meter tile from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556
@@ -51,6 +49,8 @@ def calculate(floors=1, xLength=1, yLength=1):
     # cost of oak tree saplings per acre
     # 50 trees per acre at 18.99 from https://sequoiatrees.com/products/valley-oak-medium-tree-seedling?variant=30222711062591&currency=USD
     cost += 50*18.99*oakTreeAcres
+    # slash pine cost per acre from page 3 of https://web.archive.org/web/20231126224531id_/https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf
+    cost = slashPineAcres*(55+110)
     
     # constraints
     constraints = []
