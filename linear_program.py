@@ -70,6 +70,9 @@ def calculate(floors=1, xLength=1, yLength=1):
     # we want to be able to support at least two times the load amount
     constraints.append(cp.sum(aluminumColumns)*9.5254398 + cp.sum(steelColumns)*5.0802345 >= 2*(floors-1)*(subflooringTileWeight+floorWeight)*xLength*yLength)
 
+    # minimum columns per floor is 4
+    constraints.append(cp.sum(aluminumColumns) + cp.sum(steelColumns) >= 4*floors)
+
     # nonnegativity
     constraints.append(aluminumColumns >= 0)
     constraints.append(steelColumns >= 0)
