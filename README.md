@@ -36,13 +36,13 @@ Slash pine acres: 1.871280690153568
 ```python
 Parameters given: 1 floor, 40 tile x length, 20 tile y length.
 
-Cost of materials and offsets (measured in USD): $44495.92
+Cost of materials and offsets (measured in USD): $44755.65
 
 Columns (measured in quantity):
 Aluminum columns needed: 0
-Steel columns needed: 0
+Steel columns needed: 4
 
 Carbon offsets (measured in acres):
-Slash pine acres: 0.470453276482987
+Slash pine acres: 0.4712181400782896
 ```
 <!-- END TEST CASE -->
