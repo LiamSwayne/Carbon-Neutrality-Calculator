@@ -20,7 +20,7 @@ Carbon offsets (measured in acres):
 Oak tree acres: 0.13730774550068212
 Slash pine acres: 0.13730774550068212
 Eucalyptus tree acres: 0.27461549100136423
-number of parking spaces needed: 166
+Number of parking spaces needed: 166
 ```
 <!-- END TEST CASE -->
 
@@ -38,7 +38,7 @@ Carbon offsets (measured in acres):
 Oak tree acres: 0.27460425916165226
 Slash pine acres: 0.2746042591616524
 Eucalyptus tree acres: 0.5492085183233048
-number of parking spaces needed: 333
+Number of parking spaces needed: 333
 ```
 <!-- END TEST CASE -->
 
@@ -56,6 +56,6 @@ Carbon offsets (measured in acres):
 Oak tree acres: 0.07322780244310728
 Slash pine acres: 0.0732278024431073
 Eucalyptus tree acres: 0.1464556048862146
-number of parking spaces needed: 88
+Number of parking spaces needed: 88
 ```
 <!-- END TEST CASE -->
