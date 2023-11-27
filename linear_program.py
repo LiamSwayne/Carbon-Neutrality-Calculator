@@ -82,7 +82,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     problem = cp.Problem(cp.Minimize(cost), constraints)
     problem.solve(verbose = True)
     
-    logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " tile x length, " + str(yLength) + " tile y length.")
+    logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " meter x length, " + str(yLength) + " meter y length.")
     logs.append("\nCost of materials and offsets (measured in USD): $" + str(round(cost.value, 2)))
     logs.append("\nColumns (measured in quantity):")
     logs.append("Aluminum columns needed: "+str(sumMatrix(aluminumColumns.value)))
