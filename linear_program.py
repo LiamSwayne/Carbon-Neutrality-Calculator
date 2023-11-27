@@ -103,8 +103,10 @@ def calculate(floors=1, xLength=1, yLength=1):
     # no tree can be planted twice as much as any other tree
     constraints.append(oakTreeAcres>=(1/2)*eucalyptusTreeAcres)
     constraints.append(oakTreeAcres<=2*eucalyptusTreeAcres)
+
     constraints.append(oakTreeAcres>=(1/2)*slashPineAcres)
     constraints.append(oakTreeAcres<=2*slashPineAcres)
+    
     constraints.append(eucalyptusTreeAcres>=(1/2)*slashPineAcres)
     constraints.append(eucalyptusTreeAcres<=2*slashPineAcres)
     
