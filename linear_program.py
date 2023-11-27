@@ -13,7 +13,7 @@ def sumMatrix(matrix):
     return int(sum(sum(row) for row in matrix))
 
 # solve linear system
-def calculate(floors=1, xLength=1, yLength=1, lifespan=100):
+def calculate(floors=1, xLength=1, yLength=1):
     # floors is the number of floors of the building
     # xLength is the length of the building in square meter tiles
     # yLength is the width of the building in square meter tiles
@@ -31,8 +31,8 @@ def calculate(floors=1, xLength=1, yLength=1, lifespan=100):
     floorWeight = 0.5674154216
     
     # create columns
-    aluminumColumns = cp.Variable((xLength,yLength), integer = True)
-    steelColumns = cp.Variable((xLength,yLength), integer = True)
+    aluminumColumns = cp.Variable(floors, integer = True)
+    steelColumns = cp.Variable(floors, integer = True)
     
     # create trees
     oakTreeAcres = cp.Variable(nonneg=True)
@@ -83,7 +83,7 @@ def calculate(floors=1, xLength=1, yLength=1, lifespan=100):
     # the emissions are approximately 0.09333 metric tons per square meter, from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4809014/.
     # the size of a parking space is approximately 15 square meters, so the CO2 cost of a parking spot is appoximately
     # 1.4 metric tons per parking space.
-    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 + xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)/9)*1.4 - oakTreeAcres*3.8446*lifespan - slashPineAcres*3.69*lifespan - eucalyptusTreeAcres*11.3820*lifespan <= 0)
+    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 + xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)/9)*1.4 - oakTreeAcres*3.8446*20 - slashPineAcres*3.69*20 - eucalyptusTreeAcres*11.3820*20 <= 0)
     
     # columns supporting each floor
     # aluminum column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
@@ -91,7 +91,8 @@ def calculate(floors=1, xLength=1, yLength=1, lifespan=100):
     # steel column support figure from https://www.homedepot.com/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528#:~:text=maximum%20extension%20(lb.)-,11200%20lb,-Maximum%20load%20at
     # 11200 pounds has been converted to metric tons
     # we want to be able to support at least 1.5 times the load amount
-    constraints.append(cp.sum(aluminumColumns)*9.5254398 + cp.sum(steelColumns)*5.0802345 >= 1.5*floors*(subflooringTileWeight+floorWeight)*xLength*yLength)
+    for i in range(floors):
+        constraints.append(aluminumColumns[i]*9.5254398 + steelColumns[i]*5.0802345 >= 1.5*(floors-i)*(subflooringTileWeight+floorWeight)*xLength*yLength)
 
     # nonnegativity
     constraints.append(aluminumColumns >= 0)
