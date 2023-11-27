@@ -81,6 +81,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     constraints.append(aluminumColumns >= 0)
     constraints.append(steelColumns >= 0)
     constraints.append(slashPineAcres >= 0)
+    constraints.append(slashPineAcres >= 0)
     
     # create and solve problem
     problem = cp.Problem(cp.Minimize(cost), constraints)
@@ -92,8 +93,8 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Aluminum columns needed: "+str(sumMatrix(aluminumColumns.value)))
     logs.append("Steel columns needed: "+str(sumMatrix(steelColumns.value)))
     logs.append("\nCarbon offsets (measured in acres):")
-    logs.append("Oak tree acres: " + str(oakTreeAcres.value))
-    logs.append("Slash pine acres: " + str(slashPineAcres.value))
+    logs.append("Oak tree acres: " + str(abs(oakTreeAcres.value)))
+    logs.append("Slash pine acres: " + str(abs(slashPineAcres.value)))
 
 # get arguments from command line
 if len(sys.argv) == 4 or len(sys.argv) == 5:
