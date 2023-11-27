@@ -8,10 +8,9 @@ import cvxpy as cp
 # info for README.md
 logs = []
 
-# simple matrix sum function
+# simple 2D matrix sum function
 def sumMatrix(matrix):
     return int(sum(sum(row) for row in matrix))
-
 
 # solve linear system
 def calculate(floors=1, xLength=1, yLength=1):
@@ -40,7 +39,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     slashPineAcres = cp.Variable()
     
     # cost calculation (measured in USD)
-    # page 3 of https://web.archive.org/web/20231126224531id_/https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf for slash pine cost per acre
+    # slash pine cost per acre from page 3 of https://web.archive.org/web/20231126224531id_/https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf
     cost = slashPineAcres*(55+110)
     # cost of aluminum columns from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907
     cost += cp.sum(aluminumColumns)*278
@@ -69,7 +68,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # steel column support figure from https://www.homedepot.com/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528#:~:text=maximum%20extension%20(lb.)-,11200%20lb,-Maximum%20load%20at
     # 11200 pounds has been converted to metric tons
     # we want to be able to support at least twice the load amount
-    constraints.append(cp.sum(aluminumColumns)*9.5254398 + cp.sum(steelColumns)*5.0802345 >= 2*(floors-1)*(subflooringTileWeight+floorWeight))
+    constraints.append(cp.sum(aluminumColumns)*9.5254398 + cp.sum(steelColumns)*5.0802345 >= 2*(floors-1)*(subflooringTileWeight+floorWeight)*xLength*yLength)
     
     # nonnegativity
     constraints.append(aluminumColumns >= 0)
