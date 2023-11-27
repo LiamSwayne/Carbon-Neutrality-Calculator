@@ -99,6 +99,14 @@ def calculate(floors=1, xLength=1, yLength=1):
     # nonnegativity
     constraints.append(aluminumColumns >= 0)
     constraints.append(steelColumns >= 0)
+
+    # constraints to ensure biodiversity amongst the tree species
+    constraints.append(oakTreeAcres>=(1/2)*eucalyptusTreeAcres)
+    constraints.append(oakTreeAcres<=2*eucalyptusTreeAcres)
+    constraints.append(oakTreeAcres>=(1/2)*slashPineAcres)
+    constraints.append(oakTreeAcres<=2*slashPineAcres)
+    constraints.append(eucalyptusTreeAcres>=(1/2)*slashPineAcres)
+    constraints.append(eucalyptusTreeAcres<=2*slashPineAcres)
     
     # create and solve problem
     problem = cp.Problem(cp.Minimize(cost), constraints)
