@@ -68,10 +68,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # steel column support figure from https://www.homedepot.com/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528#:~:text=maximum%20extension%20(lb.)-,11200%20lb,-Maximum%20load%20at
     # 11200 pounds has been converted to metric tons
     # we want to be able to support at least two times the load amount
-    constraints.append(cp.sum(aluminumColumns)*9.5254398 + cp.sum(steelColumns)*5.0802345 >= 2*(floors-1)*(subflooringTileWeight+floorWeight)*xLength*yLength)
-
-    # minimum columns per floor is 4
-    constraints.append(cp.sum(aluminumColumns) + cp.sum(steelColumns) >= 4*floors)
+    constraints.append(cp.sum(aluminumColumns)*9.5254398 + cp.sum(steelColumns)*5.0802345 >= 2*floors*(subflooringTileWeight+floorWeight)*xLength*yLength)
 
     # nonnegativity
     constraints.append(aluminumColumns >= 0)
