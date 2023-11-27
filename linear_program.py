@@ -50,7 +50,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # 50 trees per acre at 18.99 from https://sequoiatrees.com/products/valley-oak-medium-tree-seedling?variant=30222711062591&currency=USD
     cost += 50*18.99*oakTreeAcres
     # slash pine cost per acre from page 3 of https://web.archive.org/web/20231126224531id_/https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf
-    cost = slashPineAcres*(55+110)
+    cost += slashPineAcres*(55+110)
     
     # constraints
     constraints = []
