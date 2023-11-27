@@ -80,7 +80,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # nonnegativity
     constraints.append(aluminumColumns >= 0)
     constraints.append(steelColumns >= 0)
-    constraints.append(slashPineAcres >= 0)
+    constraints.append(oakTreeAcres >= 0)
     constraints.append(slashPineAcres >= 0)
     
     # create and solve problem
