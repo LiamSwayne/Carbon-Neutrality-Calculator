@@ -67,9 +67,9 @@ def calculate(floors=1, xLength=1, yLength=1):
     # 21000 pounds has been converted to metric tons
     # steel column support figure from https://www.homedepot.com/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528#:~:text=maximum%20extension%20(lb.)-,11200%20lb,-Maximum%20load%20at
     # 11200 pounds has been converted to metric tons
-    # we want to be able to support at least twice the load amount
+    # we want to be able to support at least two times the load amount
     constraints.append(cp.sum(aluminumColumns)*9.5254398 + cp.sum(steelColumns)*5.0802345 >= 2*(floors-1)*(subflooringTileWeight+floorWeight)*xLength*yLength)
-    
+
     # nonnegativity
     constraints.append(aluminumColumns >= 0)
     constraints.append(steelColumns >= 0)
@@ -96,9 +96,9 @@ if len(sys.argv) == 4 or len(sys.argv) == 5:
     calculate(floors, xLength, yLength)
 else:
     print("Invalid command-line arguments. Follow this format: python script.py floors xLength yLength")
-    randomFloors = random.randint(1, 10)
-    randomXLength = random.randint(1, 10)
-    randomYLength = random.randint(1, 10)
+    randomFloors = random.randint(10, 50)
+    randomXLength = random.randint(10, 50)
+    randomYLength = random.randint(10, 50)
     print("Running randomized values: floors=" + str(randomFloors) + " xLength=" + str(randomXLength) + " yLength=" + str(randomYLength))
     calculate(randomFloors, randomXLength, randomYLength)
 
