@@ -35,7 +35,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     steelColumns = cp.Variable((xLength,yLength), integer = True)
     
     # create trees
-    # TODO: add more trees
+    oakTreeAcres = cp.variable()
     slashPineAcres = cp.Variable()
     
     # cost calculation (measured in USD)
@@ -48,6 +48,9 @@ def calculate(floors=1, xLength=1, yLength=1):
     # cost of each square meter tile from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556
     # we buy 3 boards at 54.30, and divide by 2.93392603407 to get the cost per square meter tile
     cost += 55.5228721203*xLength*yLength*floors
+    # cost of oak tree saplings per acre
+    # 50 trees per acre at 18.99 from https://sequoiatrees.com/products/valley-oak-medium-tree-seedling?variant=30222711062591&currency=USD
+    cost += 50*18.99*oakTreeAcres
     
     # constraints
     constraints = []
@@ -60,7 +63,11 @@ def calculate(floors=1, xLength=1, yLength=1):
     # 3.69 metric tons times 45 years is 166.05 metric tons in total
     # the carbon emissions of a typical office building per square meter from https://www.environmentenergyleader.com/2007/10/epa-tool-estimates-greenhouse-gas-emissions-of-commercial-buildings/#:~:text=a%20look%20at%20a%20typical%20office%20building%20in%20the%20New%20England%20region%20shows%20that%20the%20building%20contributes%2020%20pounds%20of%20CO2%20per%20square%20foot
     # 10.7639 square feet in a square meter time 20 pounds per square foot, converting the output to metric tons, gives 0.0976484582 metric tons
-    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 + xLength*yLength*floors*0.0976484582 - slashPineAcres*166.05 <= 0)
+    # oak tree carbon absorbtion per acre from https://www.greenereveryday.co.uk/carbon-offsetting#:~:text=The%204.5%20tons%20of%20C%20in%20the%20Oak%20tree%20has%20required%20the%20sequestration%20of%2016.5%20tons%20of%20CO2.%20Spread%20over%20100%20years
+    # 16.5 metric tons of CO2 absorbed per oak tree
+    # 50 oak trees fit on one acre, taking the lowest figure from page 1 of https://www.in.gov/dnr/forestry/files/underplantingoak.pdf
+    # 16.5*50 is 825 total metric tons absorbed per acre over 100 years
+    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 + xLength*yLength*floors*0.0976484582 - oakTreeAcres*825 - slashPineAcres*166.05 <= 0)
     
     # columns supporting each floor
     # aluminum column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
@@ -85,6 +92,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Aluminum columns needed: "+str(sumMatrix(aluminumColumns.value)))
     logs.append("Steel columns needed: "+str(sumMatrix(steelColumns.value)))
     logs.append("\nCarbon offsets (measured in acres):")
+    logs.append("Oak tree acres: " + str(oakTreeAcres.value))
     logs.append("Slash pine acres: " + str(slashPineAcres.value))
 
 # get arguments from command line
