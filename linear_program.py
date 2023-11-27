@@ -37,7 +37,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     
     # create trees
     # TODO: add more trees
-    slashPineAcres = cp.Variable(integer = True)
+    slashPineAcres = cp.Variable()
     
     # cost calculation (measured in USD)
     # page 3 of https://web.archive.org/web/20231126224531id_/https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf for slash pine cost per acre
@@ -58,8 +58,10 @@ def calculate(floors=1, xLength=1, yLength=1):
     # each aluminum column is 30 pounds, equivalent to 0.0136078, and 0.0136078*11.7 = 0.15921126
     # each steel column is 35 pounds, equivalent to 0.0158757, and 0.0158757*2 = 0.0317514
     # slash pine carbon absorbtion per acre from https://extension.psu.edu/carbon-accounting-in-forest-management#:~:text=100%2C000%20pounds%20carbon%20per%20acre%20%C3%B7%2045,tons%20of%20CO2%20emissions%20avoided
-    # 3.69 metric tons x 45 years is 166.05 metric tons in total
-    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 - slashPineAcres*166.05 <= 0)
+    # 3.69 metric tons times 45 years is 166.05 metric tons in total
+    # the carbon emissions of a typical office building per square meter from https://www.environmentenergyleader.com/2007/10/epa-tool-estimates-greenhouse-gas-emissions-of-commercial-buildings/#:~:text=a%20look%20at%20a%20typical%20office%20building%20in%20the%20New%20England%20region%20shows%20that%20the%20building%20contributes%2020%20pounds%20of%20CO2%20per%20square%20foot
+    # 10.7639 square feet in a square meter time 20 pounds per square foot, converting the output to metric tons, gives 0.0976484582 metric tons
+    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 + xLength*yLength*floors*0.0976484582 - slashPineAcres*166.05 <= 0)
     
     # columns supporting each floor
     # aluminum column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
