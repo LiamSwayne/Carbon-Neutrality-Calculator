@@ -123,7 +123,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Oak tree acres: " + str(abs(oakTreeAcres.value)))
     logs.append("Slash pine acres: " + str(abs(slashPineAcres.value)))
     logs.append("Eucalyptus tree acres: " + str(abs(eucalyptusTreeAcres.value)))
-    logs.append("Number of parking spaces needed: " + str(int(xLength*yLength*floors/9)))
+    logs.append("\nNumber of parking spaces needed: " + str(int(xLength*yLength*floors/9)))
 
 # get arguments from command line
 if len(sys.argv) == 4 or len(sys.argv) == 5:
