@@ -100,6 +100,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     constraints.append(steelColumns >= 0)
 
     # constraints to ensure biodiversity amongst the tree species
+    # no tree can be planted twice as much as any other tree
     constraints.append(oakTreeAcres>=(1/2)*eucalyptusTreeAcres)
     constraints.append(oakTreeAcres<=2*eucalyptusTreeAcres)
     constraints.append(oakTreeAcres>=(1/2)*slashPineAcres)
