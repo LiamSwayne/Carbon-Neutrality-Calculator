@@ -33,8 +33,8 @@ def calculate(floors=1, xLength=1, yLength=1):
     floorWeight = 0.5674154216
     
     # create columns
-    aluminumColumns = cp.Variable(floors, integer = True)
-    steelColumns = cp.Variable(floors, integer = True)
+    aluminumColumns = cp.Variable(integer = True)
+    steelColumns = cp.Variable(integer = True)
     
     # create trees
     oakTreeAcres = cp.Variable(nonneg=True)
@@ -95,16 +95,15 @@ def calculate(floors=1, xLength=1, yLength=1):
     # steel column support figure from https://www.homedepot.com/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528#:~:text=maximum%20extension%20(lb.)-,11200%20lb,-Maximum%20load%20at
     # 11200 pounds has been converted to metric tons
     # we want to be able to support at least 1.5 times the load amount
-    for i in range(floors):
-        constraints.append(aluminumColumns[i]*9.5254398 + steelColumns[i]*5.0802345 >= 1.5*(floors-i)*(subflooringTileWeight+floorWeight)*xLength*yLength)
+    constraints.append(aluminumColumns*9.5254398 + steelColumns*5.0802345 >= 1.5*floors*(subflooringTileWeight+floorWeight)*xLength*yLength)
     
     # nonnegativity
-    for i in range(floors):
-        constraints.append(aluminumColumns[i] >= 0)
-        constraints.append(steelColumns[i] >= 0)
-    
+    constraints.append(aluminumColumns >= 0)
+    constraints.append(steelColumns >= 0)
 
-    
+    # constraint to ensure at least four columns per floor
+    constraints.append(steelColumns + aluminumColumns >= 4)
+
     # constraints to ensure biodiversity amongst the tree species
     # no tree can be planted twice as much as any other tree
     constraints.append(oakTreeAcres>=(1/2)*eucalyptusTreeAcres)
