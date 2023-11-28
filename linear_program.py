@@ -18,6 +18,8 @@ def calculate(floors=1, xLength=1, yLength=1):
     # xLength is the length of the building in square meter tiles
     # yLength is the width of the building in square meter tiles
     
+    building_lifespan=20
+    
     # weight of each square meter of subfloor
     # figure from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556#:~:text=Actual%20Length%20(Feet)-,7.989,-Common%20Thickness%20Measurement
     # converted 7.989*3.953 feet to 2.93392603407 square meters
@@ -59,7 +61,9 @@ def calculate(floors=1, xLength=1, yLength=1):
     cost += 50*8.99*eucalyptusTreeAcres
     # asphalt parking lot cost of 2$ per square foot from https://www.miconcrete.org/concrete-parking-lot-and-your-business
     # 15 square meters are in a parking space and 162 feet is approximately 15 square meters, so the cost is 324 dollars per space.
-    cost += ((xLength*yLength*floors)/9)*324
+    # parking space ratio is determined to be 1 space:500 square feet.
+    # use 162/15 as a ratio to convert to square feet, divide by 500 to get parking spaces, and multiply by 324 to get cost
+    cost += ((xLength*yLength*floors)*(162/15)/500)*324
     
     # constraints
     constraints = []
@@ -83,7 +87,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # the emissions are approximately 0.09333 metric tons per square meter, from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4809014/.
     # the size of a parking space is approximately 15 square meters, so the CO2 cost of a parking spot is appoximately
     # 1.4 metric tons per parking space.
-    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 + xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)/9)*1.4 - oakTreeAcres*3.8446*20 - slashPineAcres*3.69*20 - eucalyptusTreeAcres*11.3820*20 <= 0)
+    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 + xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)/9)*1.4 - oakTreeAcres*3.8446*building_lifespan - slashPineAcres*3.69*building_lifespan - eucalyptusTreeAcres*11.3820*building_lifespan <= 0)
     
     # columns supporting each floor
     # aluminum column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
@@ -93,14 +97,14 @@ def calculate(floors=1, xLength=1, yLength=1):
     # we want to be able to support at least 1.5 times the load amount
     for i in range(floors):
         constraints.append(aluminumColumns[i]*9.5254398 + steelColumns[i]*5.0802345 >= 1.5*(floors-i)*(subflooringTileWeight+floorWeight)*xLength*yLength)
-
+    
     # nonnegativity
     constraints.append(aluminumColumns >= 0)
     constraints.append(steelColumns >= 0)
-
-    #constraint to ensure columns can be placed
+    
+    # constraint to ensure columns can be placed
     constraints.append(aluminumColumns + steelColumns >= xLength*yLength)
-
+    
     # constraints to ensure biodiversity amongst the tree species
     # no tree can be planted twice as much as any other tree
     constraints.append(oakTreeAcres>=(1/2)*eucalyptusTreeAcres)
