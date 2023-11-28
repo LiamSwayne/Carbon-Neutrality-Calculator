@@ -13,8 +13,8 @@ Parameters given: 3 floor, 20 meter x length, 25 meter y length.
 Cost of materials and offsets (measured in USD): $140324.10
 
 Columns (measured in quantity):
-Aluminum columns needed: 0.0
-Steel columns needed: 789.0
+Aluminum columns needed: 0
+Steel columns needed: 789
 
 Carbon offsets (measured in acres):
 Oak tree acres: 0.57
@@ -32,8 +32,8 @@ Parameters given: 5 floor, 15 meter x length, 40 meter y length.
 Cost of materials and offsets (measured in USD): $348598.31
 
 Columns (measured in quantity):
-Aluminum columns needed: 0.0
-Steel columns needed: 2625.0
+Aluminum columns needed: 0
+Steel columns needed: 2625
 
 Carbon offsets (measured in acres):
 Oak tree acres: 1.14
@@ -51,8 +51,8 @@ Parameters given: 1 floor, 40 meter x length, 20 meter y length.
 Cost of materials and offsets (measured in USD): $56615.55
 
 Columns (measured in quantity):
-Aluminum columns needed: 0.0
-Steel columns needed: 140.0
+Aluminum columns needed: 0
+Steel columns needed: 140
 
 Carbon offsets (measured in acres):
 Oak tree acres: 0.30
