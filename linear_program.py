@@ -117,7 +117,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     
     # create and solve problem
     problem = cp.Problem(cp.Minimize(cost), constraints)
-    problem.solve(verbose = True)
+    problem.solve(verbose = False)
     
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " meter x length, " + str(yLength) + " meter y length.")
     logs.append("\nCost of materials and offsets (measured in USD): $" + "{:.2f}".format(round(cost.value, 2)))
@@ -125,10 +125,10 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Aluminum columns needed: " + str(abs(aluminumColumns.value*floors)))
     logs.append("Steel columns needed: " + str(abs(steelColumns.value*floors)))
     logs.append("\nCarbon offsets (measured in acres):")
-    logs.append("Oak tree acres: {:.2f}", abs(oakTreeAcres.value))
-    logs.append("Slash pine acres: {:.2f}", abs(slashPineAcres.value))
-    logs.append("Eucalyptus tree acres: {:.2f}", abs(eucalyptusTreeAcres.value))
-    logs.append("\nNumber of parking spaces needed: " + str(abs(int(xLength*yLength*floors/9))))
+    logs.append("Oak tree acres: {:.2f}".format(abs(oakTreeAcres.value)))
+    logs.append("Slash pine acres: {:.2f}".format(abs(slashPineAcres.value)))
+    logs.append("Eucalyptus tree acres: {:.2f}".format(abs(eucalyptusTreeAcres.value)))
+    logs.append("\nNumber of parking spaces needed: " + str(int(xLength*yLength*floors/9)))
 
 # get arguments from command line
 if len(sys.argv) == 4 or len(sys.argv) == 5:
