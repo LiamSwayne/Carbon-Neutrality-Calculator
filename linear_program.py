@@ -87,7 +87,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # the emissions are approximately 0.09333 metric tons per square meter, from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4809014/.
     # the size of a parking space is approximately 15 square meters, so the CO2 cost of a parking spot is appoximately
     # 1.4 metric tons per parking space.
-    constraints.append(cp.sum(steelColumns)*0.0317514 + cp.sum(aluminumColumns)*0.15921126 + xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)/9)*1.4 - oakTreeAcres*3.8446*building_lifespan - slashPineAcres*3.69*building_lifespan - eucalyptusTreeAcres*11.3820*building_lifespan <= 0)
+    constraints.append(steelColumns*0.0317514*floors + aluminumColumns*0.15921126*floors + xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)/9)*1.4 - oakTreeAcres*3.8446*building_lifespan - slashPineAcres*3.69*building_lifespan - eucalyptusTreeAcres*11.3820*building_lifespan <= 0)
     
     # columns supporting each floor
     # aluminum column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
