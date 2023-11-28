@@ -23,13 +23,13 @@ def calculate(floors=1, xLength=1, yLength=1):
     # weight of each square meter of subfloor
     # figure from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556#:~:text=Actual%20Length%20(Feet)-,7.989,-Common%20Thickness%20Measurement
     # converted 7.989*3.953 feet to 2.93392603407 square meters
-    # weight of a 4x8 board with 5/8 inch thickness is 53 pounds, which converts to 0.0240404
+    # weight of a 4x8 board with 5/8 inch thickness is 53 pounds, which converts to 0.0240404 metric tons
     # we assume three layers of boards are used, amounting to 0.0721212
-    # divide 0.0721212/2.93392603407 square meters for weight per square meter of 0.02458180579
+    # divide 0.0721212/2.93392603407 square meters for weight per square meter of 0.02458180579 metric tons
     subflooringTileWeight = 0.02458180579
 
     # floor weight based on corridor measurement from https://www.researchgate.net/figure/Total-weight-for-each-floor_tbl1_231000789
-    # conversion to weight per square meter is 0.5674154216
+    # conversion to weight per square meter is 0.5674154216 metric tons per square meter
     floorWeight = 0.5674154216
     
     # create columns
@@ -123,8 +123,10 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " meter x length, " + str(yLength) + " meter y length.")
     logs.append("\nCost of materials and offsets (measured in USD): $" + "{:.2f}".format(round(cost.value, 2)))
     logs.append("\nColumns (measured in quantity):")
-    logs.append("Aluminum columns needed: "+str(cp.sum(aluminumColumns)))
-    logs.append("Steel columns needed: "+str(cp.sum(steelColumns)))
+    for i in range(floors):
+        logs.append("Aluminum columns needed on floor " + str(i+1) +": " + aluminumColumns[i])
+    for i in range(floors):
+        logs.append("Steel columns needed on floor " + str(i+1) +": " + steelColumns[i])
     logs.append("\nCarbon offsets (measured in acres):")
     logs.append("Oak tree acres: " + str(abs(oakTreeAcres.value)))
     logs.append("Slash pine acres: " + str(abs(slashPineAcres.value)))
