@@ -118,13 +118,14 @@ def calculate(floors=1, xLength=1, yLength=1):
     
     # create and solve problem
     problem = cp.Problem(cp.Minimize(cost), constraints)
-    problem.solve(verbose = True, reoptimize=True)
+    problem.solve(verbose = True)
     
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " meter x length, " + str(yLength) + " meter y length.")
     logs.append("\nCost of materials and offsets (measured in USD): $" + "{:.2f}".format(round(cost.value, 2)))
     logs.append("\nColumns (measured in quantity):")
     logs.append("Aluminum columns needed: " + str(aluminumColumns.value))
     logs.append("Steel columns needed: " + str(steelColumns.value))
+    print(steelColumns.value)
     logs.append("\nCarbon offsets (measured in acres):")
     logs.append("Oak tree acres: " + str(abs(oakTreeAcres.value)))
     logs.append("Slash pine acres: " + str(abs(slashPineAcres.value)))
@@ -172,4 +173,3 @@ if len(sys.argv) == 5:
     file = open("./README.md", "w")
     file.write(newContents)
     file.close()
-calculate(3,20,25)
