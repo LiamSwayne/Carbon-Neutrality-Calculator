@@ -70,24 +70,23 @@ def calculate(floors=1, xLength=1, yLength=1):
     
     # CO2 constraint measured in metric tons
     # aluminum and steel column figures from https://www.wesa.fm/development-transportation/2017-08-31/aluminum-production-leaves-a-big-carbon-footprint-so-alcoa-is-adapting-with-sustainable-products#:~:text=For%20each%20ton%20of%20steel%20produced%2C%202%20tons%20of%20carbon%20is%20emitted.%20And%20for%20each%20ton%20of%20aluminum%2C%20the%20worldwide%20average%20is%2011.7%20tons%20of%20carbon%20emitted
-    # each aluminum column is 30 pounds, equivalent to 0.0136078, and 0.0136078*11.7 = 0.15921126
-    # each steel column is 35 pounds, equivalent to 0.0158757, and 0.0158757*2 = 0.0317514
-    # slash pine carbon absorbtion per acre from https://extension.psu.edu/carbon-accounting-in-forest-management#:~:text=100%2C000%20pounds%20carbon%20per%20acre%20%C3%B7%2045,tons%20of%20CO2%20emissions%20avoided
+    # each aluminum column is 30 pounds, equivalent to 0.0136078 metric tons, and 0.0136078 metric tons of aluminum per aluminum column*11.7 metric tons of CO2 per metric ton of aluminum produced = 0.15921126 metric tons of CO2 per aluminum column produced
+    # each steel column is 35 pounds, equivalent to 0.0158757 metric tons, and 0.0158757 metric tons of steel per steel column*2 metric tons of CO2 per metric ton of steel produced = 0.0317514 metric tons of CO2 per steel column produced
+    # slash pine carbon absorption per acre from https://extension.psu.edu/carbon-accounting-in-forest-management#:~:text=100%2C000%20pounds%20carbon%20per%20acre%20%C3%B7%2045,tons%20of%20CO2%20emissions%20avoided
     # the carbon emissions of a typical office building per square meter from https://www.environmentenergyleader.com/2007/10/epa-tool-estimates-greenhouse-gas-emissions-of-commercial-buildings/#:~:text=a%20look%20at%20a%20typical%20office%20building%20in%20the%20New%20England%20region%20shows%20that%20the%20building%20contributes%2020%20pounds%20of%20CO2%20per%20square%20foot
     # 10.7639 square feet in a square meter time 20 pounds per square foot, converting the output to metric tons, gives 0.0976484582 metric tons
-    # oak tree carbon absorbtion per tree from https://www.greenereveryday.co.uk/carbon-offsetting#:~:text=The%204.5%20tons%20of%20C%20in%20the%20Oak%20tree%20has%20required%20the%20sequestration%20of%2016.5%20tons%20of%20CO2.%20Spread%20over%20100%20years
     # oak carbon sequestration per hectare from https://winrock.org/flr-calculator/
     # 1000 hectares (about 2471 acres) absorb about 9500 metric tons of CO2 per year, so 
     # an acre of oak trees will absorb about 3.8446 metric tons of CO2 per year.
     # eucalyptus carbon sequestration per hectare from https://winrock.org/flr-calculator/
     # the calculations for eucalyptus are similar to oak trees, absorbing 37800 metric tons of CO2 per 100 hectares per year and
     # absorbing 15.176 metric tons of CO2 per acre per year.
-    # the parking lot size of the building is defined to be 1 parking spot per 9 tiles of space, rounded up,
+    # the parking lot size of the building is estimated to be 1 parking spot per 500 tiles of space, rounded up,
     # and with emissions of 52264 metric tons of CO2 over 560000 square meters, so
     # the emissions are approximately 0.09333 metric tons per square meter, from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4809014/.
     # the size of a parking space is approximately 15 square meters, so the CO2 cost of a parking spot is appoximately
     # 1.4 metric tons per parking space.
-    constraints.append(steelColumns*0.0317514*floors + aluminumColumns*0.15921126*floors + xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)/9)*1.4 - oakTreeAcres*3.8446*building_lifespan - slashPineAcres*3.69*building_lifespan - eucalyptusTreeAcres*11.3820*building_lifespan <= 0)
+    constraints.append(steelColumns*0.0317514*floors + aluminumColumns*0.15921126*floors + xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)*(162/15)/500)*1.4 - oakTreeAcres*3.8446*building_lifespan - slashPineAcres*3.69*building_lifespan - eucalyptusTreeAcres*11.3820*building_lifespan <= 0)
     
     # columns supporting each floor
     # aluminum column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
