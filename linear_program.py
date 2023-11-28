@@ -61,9 +61,9 @@ def calculate(floors=1, xLength=1, yLength=1):
     cost += 100*8.99*eucalyptusTreeAcres
     # asphalt parking lot cost of 2$ per square foot from https://www.miconcrete.org/concrete-parking-lot-and-your-business
     # 15 square meters are in a parking space and 162 feet is approximately 15 square meters, so the cost is 324 dollars per space.
-    # parking space ratio is determined to be 1 space:500 square feet.
-    # use 162/15 as a ratio to convert to square feet, divide by 500 to get parking spaces, and multiply by 324 to get cost
-    cost += ((xLength*yLength*floors)*(162/15)/500)*324
+    # parking space ratio is determined to be 1 space:250 square feet.
+    # use 162/15 as a ratio to convert to square feet, divide by 250 to get parking spaces, and multiply by 324 to get cost
+    cost += ((xLength*yLength*floors)*10.7639/250)*324
     
     # constraints
     constraints = []
