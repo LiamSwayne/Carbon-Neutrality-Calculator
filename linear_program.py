@@ -125,7 +125,6 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("\nColumns (measured in quantity):")
     logs.append("Aluminum columns needed: " + str(aluminumColumns.value))
     logs.append("Steel columns needed: " + str(steelColumns.value))
-    print(steelColumns.value)
     logs.append("\nCarbon offsets (measured in acres):")
     logs.append("Oak tree acres: " + str(abs(oakTreeAcres.value)))
     logs.append("Slash pine acres: " + str(abs(slashPineAcres.value)))
