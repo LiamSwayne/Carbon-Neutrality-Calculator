@@ -14,7 +14,7 @@ Cost of materials and offsets (measured in USD): $140324.10
 
 Columns (measured in quantity):
 Aluminum columns needed: -0.0
-Steel columns needed: 263.0
+Steel columns needed: 789.0
 
 Carbon offsets (measured in acres):
 Oak tree acres: 0.5710100428280854
@@ -33,7 +33,7 @@ Cost of materials and offsets (measured in USD): $348598.31
 
 Columns (measured in quantity):
 Aluminum columns needed: -0.0
-Steel columns needed: 525.0
+Steel columns needed: 2625.0
 
 Carbon offsets (measured in acres):
 Oak tree acres: 1.1419733767596587
