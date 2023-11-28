@@ -99,11 +99,11 @@ def calculate(floors=1, xLength=1, yLength=1):
         constraints.append(aluminumColumns[i]*9.5254398 + steelColumns[i]*5.0802345 >= 1.5*(floors-i)*(subflooringTileWeight+floorWeight)*xLength*yLength)
     
     # nonnegativity
-    constraints.append(aluminumColumns >= 0)
-    constraints.append(steelColumns >= 0)
+    for i in range(floors):
+        constraints.append(aluminumColumns[i] >= 0)
+        constraints.append(steelColumns[i] >= 0)
     
-    # constraint to ensure columns can be placed
-    constraints.append(aluminumColumns + steelColumns >= xLength*yLength)
+
     
     # constraints to ensure biodiversity amongst the tree species
     # no tree can be planted twice as much as any other tree
@@ -118,7 +118,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     
     # create and solve problem
     problem = cp.Problem(cp.Minimize(cost), constraints)
-    problem.solve(verbose = True)
+    problem.solve(verbose = True, reoptimize=True)
     
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " meter x length, " + str(yLength) + " meter y length.")
     logs.append("\nCost of materials and offsets (measured in USD): $" + "{:.2f}".format(round(cost.value, 2)))
@@ -172,3 +172,4 @@ if len(sys.argv) == 5:
     file = open("./README.md", "w")
     file.write(newContents)
     file.close()
+calculate(3,20,25)
