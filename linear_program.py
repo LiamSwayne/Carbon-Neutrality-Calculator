@@ -122,13 +122,13 @@ def calculate(floors=1, xLength=1, yLength=1):
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " meter x length, " + str(yLength) + " meter y length.")
     logs.append("\nCost of materials and offsets (measured in USD): $" + "{:.2f}".format(round(cost.value, 2)))
     logs.append("\nColumns (measured in quantity):")
-    logs.append("Aluminum columns needed: " + str(aluminumColumns.value*floors))
-    logs.append("Steel columns needed: " + str(steelColumns.value*floors))
+    logs.append("Aluminum columns needed: " + abs(aluminumColumns.value*floors))
+    logs.append("Steel columns needed: " + abs(steelColumns.value*floors))
     logs.append("\nCarbon offsets (measured in acres):")
-    logs.append("Oak tree acres: " + str(abs(oakTreeAcres.value)))
-    logs.append("Slash pine acres: " + str(abs(slashPineAcres.value)))
-    logs.append("Eucalyptus tree acres: " + str(abs(eucalyptusTreeAcres.value)))
-    logs.append("\nNumber of parking spaces needed: " + str(int(xLength*yLength*floors/9)))
+    logs.append("Oak tree acres: {:.2f}", str(abs(oakTreeAcres.value)))
+    logs.append("Slash pine acres: {:.2f}", str(abs(slashPineAcres.value)))
+    logs.append("Eucalyptus tree acres: {:.2f}", str(abs(eucalyptusTreeAcres.value)))
+    logs.append("\nNumber of parking spaces needed: " + str(abs(int(xLength*yLength*floors/9))))
 
 # get arguments from command line
 if len(sys.argv) == 4 or len(sys.argv) == 5:
