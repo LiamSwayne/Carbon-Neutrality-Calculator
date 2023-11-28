@@ -48,17 +48,17 @@ def calculate(floors=1, xLength=1, yLength=1):
     # cost of steel columns from https://web.archive.org/web/20161210125922/http://www.homedepot.com:80/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528
     cost += cp.sum(steelColumns)*64.90
     # cost of each square meter tile from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556
-    # we buy 3 boards at 54.30, and divide by 2.93392603407 to get the cost per square meter tile
-    cost += 3*54.3/2.93392603407*xLength*yLength*floors
+    # we buy 3 boards at $49.76, and divide by 2.93392603407 to get the cost per square meter tile
+    cost += 3*49.76/2.93392603407*xLength*yLength*floors
     # cost of oak tree saplings per acre
     # 50 trees per acre from the lowest figure from page 1 of https://www.in.gov/dnr/forestry/files/underplantingoak.pdf,
     # priced at 18.99 each from https://sequoiatrees.com/products/valley-oak-medium-tree-seedling?variant=30222711062591&currency=USD
-    cost += 50*18.99*oakTreeAcres
+    cost += 100*18.99*oakTreeAcres
     # slash pine cost per acre from page 3 of https://web.archive.org/web/20231126224531id_/https://bugwoodcloud.org/bugwood/productivity/pdfs/SeriesPaper5.pdf
     cost += slashPineAcres*(55+110)
     # eucalyptus density is estimated to be similar to oak density at 50 trees per acre from https://www.in.gov/dnr/forestry/files/underplantingoak.pdf
     # cost is 8.99 each from https://sequoiatrees.com/products/rainbow-eucalyptus-mini-grow-kit
-    cost += 50*8.99*eucalyptusTreeAcres
+    cost += 100*8.99*eucalyptusTreeAcres
     # asphalt parking lot cost of 2$ per square foot from https://www.miconcrete.org/concrete-parking-lot-and-your-business
     # 15 square meters are in a parking space and 162 feet is approximately 15 square meters, so the cost is 324 dollars per space.
     # parking space ratio is determined to be 1 space:500 square feet.
