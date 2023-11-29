@@ -157,7 +157,7 @@ else:
     calculate(randomFloors, randomXLength, randomYLength)
 
 # only run if it is a test case
-# example of a command-line run that updates a test: python3 "linear_program.py" 4 20 30 1
+# example of a bash command that runs the program and prints the optimal solution: python3 "linear_program.py" 4 20 30
 if len(sys.argv) == 4:
         for log in logs:
              print(log)
