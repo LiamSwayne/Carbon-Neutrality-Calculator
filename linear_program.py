@@ -23,7 +23,8 @@ def calculate(floors=1, xLength=1, yLength=1):
     # weight of each square meter of subfloor
     # figure from https://www.lowes.com/pd/AdvanTech-Flooring-23-32-CAT-PS2-10-Tongue-and-Groove-OSB-Subfloor-Application-as-4-x-8/50126556#:~:text=Actual%20Length%20(Feet)-,7.989,-Common%20Thickness%20Measurement
     # converted 7.989*3.953 feet to 2.93392603407 square meters
-    # weight of a 4x8 board with 5/8 inch thickness is 53 pounds, which converts to 0.0240404 metric tons
+    # weight of a 4x8 board with 5/8 inch thickness is 53 pounds, 
+    # which converts to 0.0240404 metric tons
     # we assume three layers of boards are used, amounting to 0.0721212
     # divide 0.0721212/2.93392603407 square meters for weight per square meter of 0.02458180579 metric tons
     subflooringTileWeight = 0.02458180579
@@ -63,7 +64,8 @@ def calculate(floors=1, xLength=1, yLength=1):
     # size of a parking space is 153 square feet from https://www.dimensions.com/element/parking-spaces
     # the cost of each space is 153*2 dollars
     # parking space ratio is determined to be 1 space:250 square feet from https://www.commercialrealestate.loans/commercial-real-estate-glossary/parking-ratio/#:~:text=May%20Be%20Increasing-,Research%20suggests%20that%20office%20building%20tenants%20are%20asking%20for%20more%20parking,parking%20ratio%20is%20currently%20around%204%20spots%20per%201%2C000%20square%20feet,-%2C%20many%20tenants%20have
-    # multiply by 10.7639 to convert to square feet, divide by 250 to get parking spaces, and multiply by 153*2 to get cost.
+    # multiply by 10.7639 to convert to square feet, divide by 250 to get parking spaces, 
+    # and multiply by 153*2 to get cost.
     cost += ((xLength*yLength*floors)*10.7639/250)*(153*2)
     
     # constraints
@@ -71,8 +73,10 @@ def calculate(floors=1, xLength=1, yLength=1):
     
     # CO2 constraint measured in metric tons
     # aluminum and steel column figures from https://www.wesa.fm/development-transportation/2017-08-31/aluminum-production-leaves-a-big-carbon-footprint-so-alcoa-is-adapting-with-sustainable-products#:~:text=For%20each%20ton%20of%20steel%20produced%2C%202%20tons%20of%20carbon%20is%20emitted.%20And%20for%20each%20ton%20of%20aluminum%2C%20the%20worldwide%20average%20is%2011.7%20tons%20of%20carbon%20emitted
-    # each aluminum column is 30 pounds, equivalent to 0.0136078 metric tons, and 0.0136078 metric tons of aluminum per aluminum column*11.7 metric tons of CO2 per metric ton of aluminum produced = 0.15921126 metric tons of CO2 per aluminum column produced
-    # each steel column is 35 pounds, equivalent to 0.0158757 metric tons, and 0.0158757 metric tons of steel per steel column*2 metric tons of CO2 per metric ton of steel produced = 0.0317514 metric tons of CO2 per steel column produced
+    # each aluminum column is 30 pounds, equivalent to 0.0136078 metric tons, and 
+    # 0.0136078 metric tons of aluminum per aluminum column*11.7 metric tons of CO2 per metric ton of aluminum produced = 0.15921126 metric tons of CO2 per aluminum column produced
+    # each steel column is 35 pounds, equivalent to 0.0158757 metric tons, and 
+    # 0.0158757 metric tons of steel per steel column*2 metric tons of CO2 per metric ton of steel produced = 0.0317514 metric tons of CO2 per steel column produced
     # slash pine carbon absorption per acre from https://extension.psu.edu/carbon-accounting-in-forest-management#:~:text=100%2C000%20pounds%20carbon%20per%20acre%20%C3%B7%2045,tons%20of%20CO2%20emissions%20avoided
     # the carbon emissions of a typical office building per square meter from https://www.environmentenergyleader.com/2007/10/epa-tool-estimates-greenhouse-gas-emissions-of-commercial-buildings/#:~:text=a%20look%20at%20a%20typical%20office%20building%20in%20the%20New%20England%20region%20shows%20that%20the%20building%20contributes%2020%20pounds%20of%20CO2%20per%20square%20foot
     # 10.7639 square feet in a square meter time 20 pounds per square foot, converting the output to metric tons, gives 0.0976484582 metric tons
@@ -80,14 +84,17 @@ def calculate(floors=1, xLength=1, yLength=1):
     # 1000 hectares (about 2471 acres) absorb about 9500 metric tons of CO2 per year, so 
     # an acre of oak trees will absorb about 3.8446 metric tons of CO2 per year.
     # eucalyptus carbon sequestration per hectare from https://winrock.org/flr-calculator/
-    # the calculations for eucalyptus are similar to oak trees, absorbing 37800 metric tons of CO2 per 100 hectares per year and
-    # absorbing 15.176 metric tons of CO2 per acre per year.
+    # the calculations for eucalyptus are similar to oak trees, 
+    # absorbing 37800 metric tons of CO2 per 1000 hectares per year and absorbing 15.176 metric tons of CO2 per acre per year.
     # the parking lot size of the building is estimated to be 1 parking spot per 250 tiles of space, rounded up,
     # and with emissions of 52264 metric tons of CO2 over 560000 square meters, so
     # the emissions are approximately 0.00867 metric tons per square foot, from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4809014/.
     # the size of a parking space is 153 square meters, so the CO2 cost of a parking spot is appoximately
     # 1.3265 metric tons per parking space.
-    constraints.append(steelColumns*0.0317514*floors + aluminumColumns*0.15921126*floors + xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)*10.7639/250)*1.3266 - oakTreeAcres*3.8446*building_lifespan - slashPineAcres*3.69*building_lifespan - eucalyptusTreeAcres*11.3820*building_lifespan <= 0)
+    constraints.append(steelColumns*0.0317514*floors + aluminumColumns*0.15921126*floors + 
+                       xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)*10.7639/250)*1.3266 - 
+                       oakTreeAcres*3.8446*building_lifespan - slashPineAcres*3.69*building_lifespan - 
+                       eucalyptusTreeAcres*11.3820*building_lifespan <= 0)
     
     # columns supporting each floor
     # aluminum column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
@@ -95,7 +102,8 @@ def calculate(floors=1, xLength=1, yLength=1):
     # steel column support figure from https://web.archive.org/web/20161210125922/http://www.homedepot.com:80/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528
     # 11200 pounds has been converted to metric tons
     # we want to be able to support at least 1.5 times the load amount
-    constraints.append(aluminumColumns*9.5254398 + steelColumns*5.0802345 >= 1.5*floors*(subflooringTileWeight+floorWeight)*xLength*yLength)
+    constraints.append(aluminumColumns*9.5254398 + steelColumns*5.0802345 >= 
+                       1.5*floors*(subflooringTileWeight+floorWeight)*xLength*yLength)
     
     # nonnegativity
     constraints.append(aluminumColumns >= 0)
