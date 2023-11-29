@@ -65,8 +65,8 @@ def calculate(floors=1, xLength=1, yLength=1):
     # the cost of each space is 153*2 dollars
     # parking space ratio is determined to be 1 space:250 square feet from https://www.commercialrealestate.loans/commercial-real-estate-glossary/parking-ratio/#:~:text=May%20Be%20Increasing-,Research%20suggests%20that%20office%20building%20tenants%20are%20asking%20for%20more%20parking,parking%20ratio%20is%20currently%20around%204%20spots%20per%201%2C000%20square%20feet,-%2C%20many%20tenants%20have
     # multiply by 10.7639 to convert to square feet, divide by 250 to get parking spaces, 
-    # and multiply by 153*2 to get cost.
-    cost += ((xLength*yLength*floors)*10.7639/250)*(153*2)
+    # multiply by 153*2 to get the cost of a space, and by 1.75 to account for the road needed to reach that space
+    cost += ((xLength*yLength*floors)*10.7639/250)*(153*2)*1.75
     
     # constraints
     constraints = []
@@ -89,10 +89,11 @@ def calculate(floors=1, xLength=1, yLength=1):
     # the parking lot size of the building is estimated to be 1 parking spot per 250 tiles of space, rounded up,
     # and with emissions of 52264 metric tons of CO2 over 560000 square meters, so
     # the emissions are approximately 0.00867 metric tons per square foot, from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4809014/.
-    # the size of a parking space is 153 square meters, so the CO2 cost of a parking spot is appoximately
-    # 1.3265 metric tons per parking space.
+    # the size of a parking space is 153 square meters, and the road in the lot to reach a space is approximately
+    # 0.75 times as much area, so the CO2 cost of a parking spot is appoximately
+    # 2.3214 metric tons per parking space.
     constraints.append(steelColumns*0.0317514*floors + aluminumColumns*0.15921126*floors + 
-                       xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)*10.7639/250)*1.3266 - 
+                       xLength*yLength*floors*0.0976484582 + ((xLength*yLength*floors)*10.7639/250)*2.3214 - 
                        oakTreeAcres*3.8446*building_lifespan - slashPineAcres*3.69*building_lifespan - 
                        eucalyptusTreeAcres*11.3820*building_lifespan <= 0)
     
