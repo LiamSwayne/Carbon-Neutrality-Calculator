@@ -61,7 +61,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     cost += 100*8.99*eucalyptusTreeAcres
     # asphalt parking lot cost of 2$ per square foot from https://www.miconcrete.org/concrete-parking-lot-and-your-business
     # size of a parking space is 153 square feet from https://www.dimensions.com/element/parking-spaces
-    # the cost of each space is 15*10.7639*2 dollars
+    # the cost of each space is 153*2 dollars
     # parking space ratio is determined to be 1 space:250 square feet from https://www.commercialrealestate.loans/commercial-real-estate-glossary/parking-ratio/#:~:text=May%20Be%20Increasing-,Research%20suggests%20that%20office%20building%20tenants%20are%20asking%20for%20more%20parking,parking%20ratio%20is%20currently%20around%204%20spots%20per%201%2C000%20square%20feet,-%2C%20many%20tenants%20have
     # multiply by 10.7639 to convert to square feet, divide by 250 to get parking spaces, and multiply by 153*2 to get cost.
     cost += ((xLength*yLength*floors)*10.7639/250)*(153*2)
