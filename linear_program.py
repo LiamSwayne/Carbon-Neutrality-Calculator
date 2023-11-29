@@ -146,6 +146,8 @@ if len(sys.argv) == 4 or len(sys.argv) == 5:
     xLength = int(sys.argv[2])
     yLength = int(sys.argv[3])
     calculate(floors, xLength, yLength)
+    if len(sys.argv) == 4:
+        print(logs)
 else:
     print("Invalid command-line arguments. Follow this format: python script.py floors xLength yLength")
     randomFloors = random.randint(10, 50)
@@ -156,7 +158,10 @@ else:
 
 # only run if it is a test case
 # example of a command-line run that updates a test: python3 "linear_program.py" 4 20 30 1
-if len(sys.argv) == 5:
+if len(sys.argv) == 4:
+        for log in logs:
+             print(log)
+elif len(sys.argv) == 5:
     testCaseNum = int(sys.argv[4])
 
     # open the README.md file
