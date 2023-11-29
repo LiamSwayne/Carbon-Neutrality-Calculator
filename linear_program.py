@@ -128,7 +128,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     problem.solve(verbose = False)
     
     logs.append("Parameters given: " + str(floors) + " floor, " + str(xLength) + " meter x length, " + str(yLength) + " meter y length.")
-    logs.append("\nCost of materials and offsets (measured in USD): $" + "{:.2f}".format(round(cost.value, 2)))
+    logs.append("\nCost of materials and carbon offsets (measured in USD): $" + "{:.2f}".format(round(cost.value, 2)))
     logs.append("\nColumns (measured in quantity):")
     logs.append("Aluminum columns needed: " + str(int(abs(aluminumColumns.value*floors))))
     logs.append("Steel columns needed: " + str(int(abs(steelColumns.value*floors))))
