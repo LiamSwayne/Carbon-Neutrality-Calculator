@@ -8,10 +8,6 @@ import cvxpy as cp
 # info for README.md
 logs = []
 
-# simple 2D matrix sum function
-def sumMatrix(matrix):
-    return int(sum(sum(row) for row in matrix))
-
 # solve linear system
 def calculate(floors=1, xLength=1, yLength=1):
     # floors is the number of floors of the building
