@@ -92,7 +92,7 @@ def calculate(floors=1, xLength=1, yLength=1):
     # columns supporting each floor
     # aluminum column support figure from https://www.homedepot.com/p/Afco-8-x-7-5-8-Endura-Aluminum-Column-Round-Shaft-Load-Bearing-21-000-lbs-Non-Tapered-Fluted-Gloss-White-EA0808ANFSATUTU/301315907#:~:text=bearing%20limit%20(lb.)-,21000,-Material
     # 21000 pounds has been converted to metric tons
-    # steel column support figure from https://www.homedepot.com/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528#:~:text=maximum%20extension%20(lb.)-,11200%20lb,-Maximum%20load%20at
+    # steel column support figure from https://web.archive.org/web/20161210125922/http://www.homedepot.com:80/p/Tiger-Brand-8-ft-to-8-ft-4-in-Adjustable-Steel-Building-Support-Column-3-in-O-D-3A-8084/202086528
     # 11200 pounds has been converted to metric tons
     # we want to be able to support at least 1.5 times the load amount
     constraints.append(aluminumColumns*9.5254398 + steelColumns*5.0802345 >= 1.5*floors*(subflooringTileWeight+floorWeight)*xLength*yLength)
