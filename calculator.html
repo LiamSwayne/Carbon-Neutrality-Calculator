@@ -68,7 +68,7 @@
         function updateTreeQuantity(sliderId, outputId) {
             const slider = document.getElementById(sliderId);
             const output = document.getElementById(outputId);
-            output.textContent = `${slider.value} Trees`;
+            output.textContent = `${Math.pow(1.14, slider.value)} Trees`;
         }
 
         // Function to calculate and update results
