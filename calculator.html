@@ -68,7 +68,10 @@
         function updateTreeQuantity(sliderId, outputId) {
             const slider = document.getElementById(sliderId);
             const output = document.getElementById(outputId);
-            output.textContent = `${Math.pow(1.14, slider.value)} Trees`;
+            const hundrethRootOf100001 = 1.1220185665
+            const sliderValue = Math.round(Math.pow(hundrethRootOf100001, slider.value));
+            output.textContent = `${sliderValue-1} Trees`;
+            calculateResults();
         }
 
         // Function to calculate and update results
@@ -78,21 +81,21 @@
             let totalPrice = 0;
 
             // Tree 1
-            const tree1Quantity = parseInt(document.getElementById('tree1').value) || 0;
+            const tree1Quantity = parseInt(document.getElementById('tree1Output').textContent.split(" "[0])) || 0;
             const tree1CO2Absorption = 10; // replace with actual CO2 absorption rate
             const tree1Price = 5; // replace with actual price
             totalCO2Reduction += tree1Quantity * tree1CO2Absorption;
             totalPrice += tree1Quantity * tree1Price;
 
             // Tree 2
-            const tree2Quantity = parseInt(document.getElementById('tree2').value) || 0;
+            const tree2Quantity = parseInt(document.getElementById('tree2Output').textContent.split(" "[0])) || 0;
             const tree2CO2Absorption = 15; // replace with actual CO2 absorption rate
             const tree2Price = 8; // replace with actual price
             totalCO2Reduction += tree2Quantity * tree2CO2Absorption;
             totalPrice += tree2Quantity * tree2Price;
 
             // Tree 3
-            const tree3Quantity = parseInt(document.getElementById('tree3').value) || 0;
+            const tree3Quantity = parseInt(document.getElementById('tree3Output').textContent.split(" "[0])) || 0;
             const tree3CO2Absorption = 20; // replace with actual CO2 absorption rate
             const tree3Price = 10; // replace with actual price
             totalCO2Reduction += tree3Quantity * tree3CO2Absorption;
