@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO2 Emissions Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input, output {
+            margin-bottom: 15px;
+        }
+
+        .tree-slider {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>CO2 Emissions Calculator</h1>
+
+    <label for="co2Input">CO2 Emissions:</label>
+    <input type="number" id="co2Input" placeholder="Enter CO2 emissions" />
+    <span>gCO2</span>
+
+    <div class="tree-slider">
+        <label for="tree1">Tree Type 1:</label>
+        <input type="range" id="tree1" min="0" max="100" step="1" value="0" />
+        <output id="tree1Output">0 Trees</output>
+    </div>
+
+    <div class="tree-slider">
+        <label for="tree2">Tree Type 2:</label>
+        <input type="range" id="tree2" min="0" max="100" step="1" value="0" />
+        <output id="tree2Output">0 Trees</output>
+    </div>
+
+    <div class="tree-slider">
+        <label for="tree3">Tree Type 3:</label>
+        <input type="range" id="tree3" min="0" max="100" step="1" value="0" />
+        <output id="tree3Output">0 Trees</output>
+    </div>
+
+    <hr>
+
+    <h2>Calculator Results</h2>
+
+    <div>
+        <label for="resultCO2">Net CO2 Emissions:</label>
+        <output id="resultCO2">0 gCO2</output>
+    </div>
+
+    <div>
+        <label for="totalPrice">Total Price:</label>
+        <output id="totalPrice">$0</output>
+    </div>
+
+    <script>
+        // Function to update tree quantity output
+        function updateTreeQuantity(sliderId, outputId) {
+            const slider = document.getElementById(sliderId);
+            const output = document.getElementById(outputId);
+            output.textContent = `${slider.value} Trees`;
+        }
+
+        // Function to calculate and update results
+        function calculateResults() {
+            const co2Input = parseFloat(document.getElementById('co2Input').value) || 0;
+            let totalCO2Reduction = 0;
+            let totalPrice = 0;
+
+            // Tree 1
+            const tree1Quantity = parseInt(document.getElementById('tree1').value) || 0;
+            const tree1CO2Absorption = 10; // replace with actual CO2 absorption rate
+            const tree1Price = 5; // replace with actual price
+            totalCO2Reduction += tree1Quantity * tree1CO2Absorption;
+            totalPrice += tree1Quantity * tree1Price;
+
+            // Tree 2
+            const tree2Quantity = parseInt(document.getElementById('tree2').value) || 0;
+            const tree2CO2Absorption = 15; // replace with actual CO2 absorption rate
+            const tree2Price = 8; // replace with actual price
+            totalCO2Reduction += tree2Quantity * tree2CO2Absorption;
+            totalPrice += tree2Quantity * tree2Price;
+
+            // Tree 3
+            const tree3Quantity = parseInt(document.getElementById('tree3').value) || 0;
+            const tree3CO2Absorption = 20; // replace with actual CO2 absorption rate
+            const tree3Price = 10; // replace with actual price
+            totalCO2Reduction += tree3Quantity * tree3CO2Absorption;
+            totalPrice += tree3Quantity * tree3Price;
+
+            // Update results
+            const resultCO2 = document.getElementById('resultCO2');
+            const totalPriceOutput = document.getElementById('totalPrice');
+            resultCO2.textContent = `${co2Input - totalCO2Reduction} gCO2`;
+            totalPriceOutput.textContent = `$${totalPrice}`;
+        }
+
+        // Event listeners for tree sliders
+        document.getElementById('tree1').addEventListener('input', () => updateTreeQuantity('tree1', 'tree1Output'));
+        document.getElementById('tree2').addEventListener('input', () => updateTreeQuantity('tree2', 'tree2Output'));
+        document.getElementById('tree3').addEventListener('input', () => updateTreeQuantity('tree3', 'tree3Output'));
+
+        // Event listener for CO2 input
+        document.getElementById('co2Input').addEventListener('input', calculateResults);
+
+        // Initial calculations
+        calculateResults();
+    </script>
+</body>
+</html>
