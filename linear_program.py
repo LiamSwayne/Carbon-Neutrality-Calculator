@@ -5,7 +5,7 @@ import random
 # import external libraries
 import cvxpy as cp
 
-# info for README.md
+# info for legacy README.md
 logs = []
 
 # solve linear system
@@ -160,8 +160,8 @@ if len(sys.argv) == 4:
 elif len(sys.argv) == 5:
     testCaseNum = int(sys.argv[4])
 
-    # open the README.md file
-    file = open("./README.md", "r")
+    # open the legacy README.md file
+    file = open("./carbon_neutral_building/README.md", "r")
     fileContents = file.read()
 
     # locate case
@@ -178,6 +178,6 @@ elif len(sys.argv) == 5:
     file.close()
 
     # writing updated content to file
-    file = open("./README.md", "w")
+    file = open("./carbon_neutral_building/README.md", "w")
     file.write(newContents)
     file.close()
