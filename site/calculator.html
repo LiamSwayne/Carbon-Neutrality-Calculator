@@ -10,11 +10,6 @@
             margin: 20px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
         input, output {
             margin-bottom: 15px;
         }
@@ -22,45 +17,62 @@
         .tree-slider {
             margin-bottom: 30px;
         }
+
+        .result-section, .input-section {
+            display: flex;
+            justify-content: flex-start;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,  
+        input[type=number]::-webkit-outer-spin-button {  
+            -webkit-appearance: none;  
+            margin:  0;  
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 </head>
 <body>
     <h1>CO2 Emissions Calculator</h1>
 
-    <label for="co2Input">CO2 Emissions:</label>
-    <input type="number" id="co2Input" placeholder="Enter CO2 emissions" />
-    <span>gCO2</span>
+    <div class="input-section">
+        <label for="co2Input">CO2 Emissions:&nbsp;</label>
+        <input type="number" id="co2Input" placeholder="Enter CO2 emissions" aria-labelledby="co2Label" />
+        &nbsp;gCO2
+    </div>
 
     <div class="tree-slider">
-        <label for="tree1">Tree Type 1:</label>
-        <input type="range" id="tree1" min="0" max="100" step="1" value="0" />
+        <div id="tree1Label">Tree Type 1:</div>
+        <input type="range" id="tree1" min="0" max="100" step="1" value="0" aria-labelledby="tree1Label" />
         <output id="tree1Output">0 Trees</output>
     </div>
 
     <div class="tree-slider">
-        <label for="tree2">Tree Type 2:</label>
-        <input type="range" id="tree2" min="0" max="100" step="1" value="0" />
+        <div id="tree2Label">Tree Type 2:</div>
+        <input type="range" id="tree2" min="0" max="100" step="1" value="0" aria-labelledby="tree2Label" />
         <output id="tree2Output">0 Trees</output>
     </div>
 
     <div class="tree-slider">
-        <label for="tree3">Tree Type 3:</label>
-        <input type="range" id="tree3" min="0" max="100" step="1" value="0" />
+        <div id="tree3Label">Tree Type 3:</div>
+        <input type="range" id="tree3" min="0" max="100" step="1" value="0" aria-labelledby="tree3Label" />
         <output id="tree3Output">0 Trees</output>
     </div>
 
-    <hr>
-
     <h2>Calculator Results</h2>
 
-    <div>
-        <label for="resultCO2">Net CO2 Emissions:</label>
-        <output id="resultCO2">0 gCO2</output>
+    <div class="result-section">
+        <div id="resultCO2Label">Net CO2 Emissions:&nbsp;</div>
+        <output id="resultCO2" aria-labelledby="resultCO2Label">0 gCO2</output>
     </div>
 
-    <div>
-        <label for="totalPrice">Total Price:</label>
-        <output id="totalPrice">$0</output>
+    <div class="result-section">
+        <div id="totalPriceLabel">Total Price:&nbsp;</div>
+        <output id="totalPrice" aria-labelledby="totalPriceLabel">$0</output>
     </div>
 
     <script>
