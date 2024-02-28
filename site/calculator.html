@@ -109,12 +109,22 @@
         }
 
         // Event listeners for tree sliders
-        document.getElementById('tree1').addEventListener('input', () => updateTreeQuantity('tree1', 'tree1Output'));
-        document.getElementById('tree2').addEventListener('input', () => updateTreeQuantity('tree2', 'tree2Output'));
-        document.getElementById('tree3').addEventListener('input', () => updateTreeQuantity('tree3', 'tree3Output'));
+        document.getElementById('tree1').addEventListener('input', function() {
+            updateTreeQuantity('tree1', 'tree1Output');
+        });
+
+        document.getElementById('tree2').addEventListener('input', function() {
+            updateTreeQuantity('tree2', 'tree2Output');
+        });
+
+        document.getElementById('tree3').addEventListener('input', function() {
+            updateTreeQuantity('tree3', 'tree3Output');
+        });
 
         // Event listener for CO2 input
-        document.getElementById('co2Input').addEventListener('input', calculateResults);
+        document.getElementById('co2Input').addEventListener('input', function() {
+            calculateResults();
+        });
 
         // Initial calculations
         calculateResults();
