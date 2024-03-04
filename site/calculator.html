@@ -137,7 +137,7 @@
                 const treeId = slider.id;
                 
                 // Get tree quantity
-                const treeQuantity = parseInt(document.getElementById(treeId + 'Output').textContent.split(" ")[0]) || 0;
+                const treeQuantity = parseInt(document.getElementById(treeId + 'Output').innerText.split(" ")[0]) || 0;
 
                 // Get CO2 absorption rate and price from getPricePerTree function
                 const treeCO2Absorption = parseInt(treeId.replace('tree', '')) * 5; // Replace with actual CO2 absorption rate
