@@ -121,6 +121,11 @@
                 treeSlider.appendChild(slider);
                 treeSlider.appendChild(output);
                 treeSlidersContainer.appendChild(treeSlider);
+
+                // Add event listener for each tree slider
+                slider.addEventListener('input', function () {
+                    updateTreeQuantity(treeId, `${treeId}Output`);
+                });
             }
         }
 
@@ -200,8 +205,8 @@
 
         // Event listener for number of trees input
         document.getElementById('numberOfTreesInput').addEventListener('input', function () {
-            const numberOfTreesInputValue = parseFloat(this.value) || 0;
-            createTreeSliders(numberOfTreesInputValue);
+            numTrees = parseFloat(this.value) || 0;
+            createTreeSliders(numTrees);
         });
 
         // Function to update tree quantity based on budget
