@@ -41,7 +41,6 @@
 <body>
     <h1>CO2 Emissions Calculator</h1>
 
-    <!-- Input sections for CO2 emissions, number of trees, and budget -->
     <div class="input-section">
         <label for="co2Input">CO2 Emissions:&nbsp;</label>
         <input type="number" id="co2Input" placeholder="Enter CO2 emissions" aria-labelledby="co2Label" />
@@ -59,12 +58,29 @@
         &nbsp;$
     </div>
 
-    <!-- Dynamic tree sliders generated with JavaScript -->
-    <div id="treeSlidersContainer"></div>
+    <div class="tree-slider">
+        <input type="checkbox" id="tree1Checkbox" onclick="toggleTree('tree1')" />
+        <label for="tree1Checkbox">Enable Tree Type 1</label>
+        <input type="range" id="tree1" min="0" max="1000" step="1" value="0" aria-labelledby="tree1Label" disabled />
+        <output id="tree1Output">0 trees</output>
+    </div>
+
+    <div class="tree-slider">
+        <input type="checkbox" id="tree2Checkbox" onclick="toggleTree('tree2')" />
+        <label for="tree2Checkbox">Enable Tree Type 2</label>
+        <input type="range" id="tree2" min="0" max="1000" step="1" value="0" aria-labelledby="tree2Label" disabled />
+        <output id="tree2Output">0 trees</output>
+    </div>
+
+    <div class="tree-slider">
+        <input type="checkbox" id="tree3Checkbox" onclick="toggleTree('tree3')" />
+        <label for="tree3Checkbox">Enable Tree Type 3</label>
+        <input type="range" id="tree3" min="0" max="1000" step="1" value="0" aria-labelledby="tree3Label" disabled />
+        <output id="tree3Output">0 trees</output>
+    </div>
 
     <h2>Results</h2>
 
-    <!-- Results sections for net CO2 emissions and total price -->
     <div class="result-section">
         <div id="resultCO2Label">Net CO2 Emissions:&nbsp;</div>
         <output id="resultCO2" aria-labelledby="resultCO2Label">0 tons</output>
@@ -76,58 +92,7 @@
     </div>
 
     <script>
-        const sliderScalar = 1.01157945426;
-        let numTrees = 3;
-
-        // Function to dynamically create tree sliders
-        function createTreeSliders(numTrees) {
-            const treeSlidersContainer = document.getElementById('treeSlidersContainer');
-            treeSlidersContainer.innerHTML = '';
-
-            for (let i = 1; i <= numTrees; i++) {
-                const treeId = `tree${i}`;
-                const checkboxId = `${treeId}Checkbox`;
-
-                // Create tree slider elements
-                const treeSlider = document.createElement('div');
-                treeSlider.className = 'tree-slider';
-
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.id = checkboxId;
-                checkbox.onclick = () => toggleTree(treeId);
-
-                const label = document.createElement('label');
-                label.htmlFor = checkboxId;
-                label.textContent = `Enable Tree Type ${i}`;
-
-                const slider = document.createElement('input');
-                slider.type = 'range';
-                slider.id = treeId;
-                slider.min = '0';
-                slider.max = '1000';
-                slider.step = '1';
-                slider.value = '0';
-                slider.ariaLabelledby = `${treeId}Label`;
-                slider.disabled = true;
-
-                const output = document.createElement('output');
-                output.id = `${treeId}Output`;
-                output.textContent = '0 Trees';
-
-                // Append elements to the tree slider container
-                treeSlider.appendChild(checkbox);
-                treeSlider.appendChild(label);
-                treeSlider.appendChild(slider);
-                treeSlider.appendChild(output);
-                treeSlidersContainer.appendChild(treeSlider);
-
-                // Add event listener for each tree slider
-                slider.addEventListener('input', function () {
-                    updateTreeQuantity(treeId, `${treeId}Output`);
-                });
-            }
-        }
+        const sliderScalar = 1.01157945426
 
         // Function to toggle tree slider
         function toggleTree(treeId) {
@@ -154,7 +119,7 @@
             const slider = document.getElementById(sliderId);
             const output = document.getElementById(outputId);
             const sliderValue = Math.round(Math.pow(sliderScalar, slider.value));
-            output.textContent = `${sliderValue - 1} Trees`;
+            output.textContent = `${sliderValue-1} Trees`;
             calculateResults();
         }
 
@@ -165,8 +130,8 @@
             let totalPrice = 0;
 
             // Loop through each tree type
-            for (let i = 1; i <= numTrees; i++) {
-                const treeId = `tree${i}`;
+            for (let i = 1; i <= 3; i++) {
+                const treeId = 'tree' + i;
 
                 // Get tree quantity
                 const treeQuantity = parseInt(document.getElementById(treeId + 'Output').textContent.split(" ")[0]) || 0;
@@ -188,25 +153,43 @@
         }
 
         // Event listeners for tree sliders
-        for (let i = 1; i <= numTrees; i++) {
-            const treeId = `tree${i}`;
-            const sliderId = `${treeId}`;
+        document.getElementById('tree1').addEventListener('input', function() {
+            updateTreeQuantity('tree1', 'tree1Output');
+        });
 
-            // Event listener for each tree slider
-            document.getElementById(sliderId).addEventListener('input', function () {
-                updateTreeQuantity(treeId, `${treeId}Output`);
-            });
-        }
+        document.getElementById('tree2').addEventListener('input', function() {
+            updateTreeQuantity('tree2', 'tree2Output');
+        });
+
+        document.getElementById('tree3').addEventListener('input', function() {
+            updateTreeQuantity('tree3', 'tree3Output');
+        });
 
         // Event listener for CO2 input
-        document.getElementById('co2Input').addEventListener('input', function () {
+        document.getElementById('co2Input').addEventListener('input', function() {
             calculateResults();
         });
 
         // Event listener for number of trees input
-        document.getElementById('numberOfTreesInput').addEventListener('input', function () {
-            numTrees = parseFloat(this.value) || 0;
-            createTreeSliders(numTrees);
+        document.getElementById('numberOfTreesInput').addEventListener('input', function() {
+            const numberOfTreesInputValue = parseFloat(this.value) || 0;
+
+            // Enable at least one tree if none are checked
+            const checkedTrees = ['tree1Checkbox', 'tree2Checkbox', 'tree3Checkbox'].filter(id => document.getElementById(id).checked);
+            if (checkedTrees.length === 0) {
+                document.getElementById('tree1Checkbox').checked = true;
+                toggleTree('tree1');
+            }
+
+            // Scale up the checked trees
+            checkedTrees.forEach(treeId => {
+                const sliderId = treeId.replace('Checkbox', '');
+                document.getElementById(sliderId).value = Math.log((numberOfTreesInputValue + 1)/checkedTrees.length) / Math.log(sliderScalar);
+                updateTreeQuantity(sliderId, sliderId + 'Output');
+            });
+
+            // Recalculate results
+            calculateResults();
         });
 
         // Function to update tree quantity based on budget
@@ -219,7 +202,7 @@
         }
 
         // Event listener for budget input
-        document.getElementById('budgetInput').addEventListener('input', function () {
+        document.getElementById('budgetInput').addEventListener('input', function() {
             const budgetInputValue = parseFloat(this.value) || 0;
 
             // Enable at least one tree if none are checked
@@ -232,14 +215,14 @@
             // Calculate the adjusted number of trees based on budget
             checkedTrees.forEach(treeId => {
                 const sliderId = treeId.replace('Checkbox', '');
-                const pricePerTree = getPricePerTree(sliderId);
+                const pricePerTree = getPricePerTree(sliderId); // Define this function to get the price per tree
 
                 // Adjusted tree quantity based on budget and price per tree and number of tree types enabled
                 const adjustedTreeQuantity = Math.floor(budgetInputValue / pricePerTree) / checkedTrees.length;
-
+                
                 // Update the slider and tree quantity output
                 document.getElementById(sliderId).value = Math.log(adjustedTreeQuantity + 1) / Math.log(sliderScalar);
-                updateTreeQuantity(sliderId, `${sliderId}Output`);
+                updateTreeQuantity(sliderId, sliderId + 'Output');
             });
 
             // Recalculate results
@@ -261,7 +244,6 @@
         }
 
         // Initial calculations
-        createTreeSliders(numTrees); // Set the initial number of tree sliders
         calculateResults();
     </script>
 </body>
