@@ -216,9 +216,13 @@
             checkedTrees.forEach(treeId => {
                 const sliderId = treeId.replace('Checkbox', '');
                 const pricePerTree = getPricePerTree(sliderId); // Define this function to get the price per tree
-                const adjustedTreeQuantity = Math.floor(budgetInputValue / pricePerTree);
-                document.getElementById(sliderId).value = Math.log((adjustedTreeQuantity + 1) / checkedTrees.length) / Math.log(sliderScalar);
-                updateTreeQuantityFromBudget(sliderId, sliderId + 'Output');
+
+                // Adjusted tree quantity based on budget and price per tree and number of tree types enabled
+                const adjustedTreeQuantity = Math.floor(budgetInputValue / pricePerTree) / checkedTrees.length;
+                
+                // Update the slider and tree quantity output
+                document.getElementById(sliderId).value = Math.log(adjustedTreeQuantity + 1) / Math.log(sliderScalar);
+                updateTreeQuantity(sliderId, sliderId + 'Output');
             });
 
             // Recalculate results
