@@ -164,15 +164,18 @@
             const costInputValue = parseFloat(this.value) || 0;
             const hundrethRootOf100001 = 1.1220185665;
 
-            // Scale down the tree sliders
-            document.getElementById('tree1').value = Math.log(costInputValue + 1) / Math.log(hundrethRootOf100001);
-            document.getElementById('tree2').value = Math.log(costInputValue + 1) / Math.log(hundrethRootOf100001);
-            document.getElementById('tree3').value = Math.log(costInputValue + 1) / Math.log(hundrethRootOf100001);
+            // Enable at least one tree if none are checked
+            const checkedTrees = ['tree1Checkbox', 'tree2Checkbox', 'tree3Checkbox'].filter(id => document.getElementById(id).checked);
+            if (checkedTrees.length === 0) {
+                document.getElementById('tree1Checkbox').checked = true;
+            }
 
-            // Update tree quantities
-            updateTreeQuantity('tree1', 'tree1Output');
-            updateTreeQuantity('tree2', 'tree2Output');
-            updateTreeQuantity('tree3', 'tree3Output');
+            // Scale up the checked trees
+            checkedTrees.forEach(treeId => {
+                const sliderId = treeId.replace('Checkbox', '');
+                document.getElementById(sliderId).value = Math.log(costInputValue + 1) / Math.log(hundrethRootOf100001);
+                updateTreeQuantity(sliderId, sliderId + 'Output');
+            });
 
             // Recalculate results
             calculateResults();
