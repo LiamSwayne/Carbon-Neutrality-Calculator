@@ -47,20 +47,23 @@
     </div>
 
     <div class="tree-slider">
-        <div id="tree1Label">Tree Type 1:</div>
-        <input type="range" id="tree1" min="0" max="100" step="1" value="0" aria-labelledby="tree1Label" />
+        <input type="checkbox" id="tree1Checkbox" onclick="toggleTree('tree1')" />
+        <label for="tree1Checkbox">Enable Tree Type 1</label>
+        <input type="range" id="tree1" min="0" max="100" step="1" value="0" aria-labelledby="tree1Label" disabled />
         <output id="tree1Output">0 Trees</output>
     </div>
 
     <div class="tree-slider">
-        <div id="tree2Label">Tree Type 2:</div>
-        <input type="range" id="tree2" min="0" max="100" step="1" value="0" aria-labelledby="tree2Label" />
+        <input type="checkbox" id="tree2Checkbox" onclick="toggleTree('tree2')" />
+        <label for="tree2Checkbox">Enable Tree Type 2</label>
+        <input type="range" id="tree2" min="0" max="100" step="1" value="0" aria-labelledby="tree2Label" disabled />
         <output id="tree2Output">0 Trees</output>
     </div>
 
     <div class="tree-slider">
-        <div id="tree3Label">Tree Type 3:</div>
-        <input type="range" id="tree3" min="0" max="100" step="1" value="0" aria-labelledby="tree3Label" />
+        <input type="checkbox" id="tree3Checkbox" onclick="toggleTree('tree3')" />
+        <label for="tree3Checkbox">Enable Tree Type 3</label>
+        <input type="range" id="tree3" min="0" max="100" step="1" value="0" aria-labelledby="tree3Label" disabled />
         <output id="tree3Output">0 Trees</output>
     </div>
 
@@ -77,6 +80,17 @@
     </div>
 
     <script>
+        // Function to toggle tree slider
+        function toggleTree(treeId) {
+            const checkbox = document.getElementById(treeId + 'Checkbox');
+            const slider = document.getElementById(treeId);
+            slider.disabled = !checkbox.checked;
+            if (!checkbox.checked) {
+                slider.value = 0;
+                updateTreeQuantity(treeId, treeId + 'Output');
+            }
+        }
+
         // Function to update tree quantity output
         function updateTreeQuantity(sliderId, outputId) {
             const slider = document.getElementById(sliderId);
@@ -94,21 +108,21 @@
             let totalPrice = 0;
 
             // Tree 1
-            const tree1Quantity = parseInt(document.getElementById('tree1Output').textContent.split(" "[0])) || 0;
+            const tree1Quantity = parseInt(document.getElementById('tree1Output').textContent.split(" ")[0]) || 0;
             const tree1CO2Absorption = 10; // replace with actual CO2 absorption rate
             const tree1Price = 5; // replace with actual price
             totalCO2Reduction += tree1Quantity * tree1CO2Absorption;
             totalPrice += tree1Quantity * tree1Price;
 
             // Tree 2
-            const tree2Quantity = parseInt(document.getElementById('tree2Output').textContent.split(" "[0])) || 0;
+            const tree2Quantity = parseInt(document.getElementById('tree2Output').textContent.split(" ")[0]) || 0;
             const tree2CO2Absorption = 15; // replace with actual CO2 absorption rate
             const tree2Price = 8; // replace with actual price
             totalCO2Reduction += tree2Quantity * tree2CO2Absorption;
             totalPrice += tree2Quantity * tree2Price;
 
             // Tree 3
-            const tree3Quantity = parseInt(document.getElementById('tree3Output').textContent.split(" "[0])) || 0;
+            const tree3Quantity = parseInt(document.getElementById('tree3Output').textContent.split(" ")[0]) || 0;
             const tree3CO2Absorption = 20; // replace with actual CO2 absorption rate
             const tree3Price = 10; // replace with actual price
             totalCO2Reduction += tree3Quantity * tree3CO2Absorption;
