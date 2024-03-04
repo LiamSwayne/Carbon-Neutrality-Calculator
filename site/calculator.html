@@ -83,7 +83,7 @@
 
     <div class="result-section">
         <div id="resultCO2Label">Net CO2 Emissions:&nbsp;</div>
-        <output id="resultCO2" aria-labelledby="resultCO2Label">0 gCO2</output>
+        <output id="resultCO2" aria-labelledby="resultCO2Label">0 tons</output>
     </div>
 
     <div class="result-section">
@@ -148,7 +148,7 @@
             // Update results
             const resultCO2 = document.getElementById('resultCO2');
             const totalPriceOutput = document.getElementById('totalPrice');
-            resultCO2.textContent = `${co2Input - totalCO2Reduction} gCO2`;
+            resultCO2.textContent = `${co2Input - totalCO2Reduction} tons`;
             totalPriceOutput.textContent = `$${totalPrice}`;
         }
 
