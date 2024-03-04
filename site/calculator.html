@@ -129,26 +129,21 @@
             let totalCO2Reduction = 0;
             let totalPrice = 0;
 
-            // Get all tree sliders
-            const treeSliders = document.querySelectorAll('[id^="tree"]');
-            
-            // Loop through each tree slider
-            treeSliders.forEach(slider => {
-                const treeId = slider.id;
-                
+            // Loop through each tree type
+            for (let i = 1; i <= 3; i++) {
+                const treeId = 'tree' + i;
+
                 // Get tree quantity
-                const treeQuantity = parseInt(document.getElementById(treeId + 'Output').innerText.split(" ")[0]) || 0;
-                console.log(document.getElementById(treeId + 'Output'));
+                const treeQuantity = parseInt(document.getElementById(treeId + 'Output').textContent.split(" ")[0]) || 0;
 
                 // Get CO2 absorption rate and price from getPricePerTree function
-                const treeCO2Absorption = parseInt(treeId.replace('tree', '')) * 5; // Replace with actual CO2 absorption rate
+                const treeCO2Absorption = i * 5; // Replace with actual CO2 absorption rate
                 const treePrice = getPricePerTree(treeId);
 
                 // Update total CO2 reduction and price
                 totalCO2Reduction += treeQuantity * treeCO2Absorption;
                 totalPrice += treeQuantity * treePrice;
-                console.log(totalPrice);
-            });
+            }
 
             // Update results
             const resultCO2 = document.getElementById('resultCO2');
