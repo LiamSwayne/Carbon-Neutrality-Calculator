@@ -77,6 +77,7 @@
 
     <script>
         const sliderScalar = 1.01157945426;
+        let numTrees = 3;
 
         // Function to dynamically create tree sliders
         function createTreeSliders(numTrees) {
@@ -182,43 +183,25 @@
         }
 
         // Event listeners for tree sliders
-        document.getElementById('tree1').addEventListener('input', function() {
-            updateTreeQuantity('tree1', 'tree1Output');
-        });
+        for (let i = 1; i <= numTrees; i++) {
+            const treeId = `tree${i}`;
+            const sliderId = `${treeId}`;
 
-        document.getElementById('tree2').addEventListener('input', function() {
-            updateTreeQuantity('tree2', 'tree2Output');
-        });
-
-        document.getElementById('tree3').addEventListener('input', function() {
-            updateTreeQuantity('tree3', 'tree3Output');
-        });
+            // Event listener for each tree slider
+            document.getElementById(sliderId).addEventListener('input', function () {
+                updateTreeQuantity(treeId, `${treeId}Output`);
+            });
+        }
 
         // Event listener for CO2 input
-        document.getElementById('co2Input').addEventListener('input', function() {
+        document.getElementById('co2Input').addEventListener('input', function () {
             calculateResults();
         });
 
         // Event listener for number of trees input
-        document.getElementById('numberOfTreesInput').addEventListener('input', function() {
+        document.getElementById('numberOfTreesInput').addEventListener('input', function () {
             const numberOfTreesInputValue = parseFloat(this.value) || 0;
-
-            // Enable at least one tree if none are checked
-            const checkedTrees = ['tree1Checkbox', 'tree2Checkbox', 'tree3Checkbox'].filter(id => document.getElementById(id).checked);
-            if (checkedTrees.length === 0) {
-                document.getElementById('tree1Checkbox').checked = true;
-                toggleTree('tree1');
-            }
-
-            // Scale up the checked trees
-            checkedTrees.forEach(treeId => {
-                const sliderId = treeId.replace('Checkbox', '');
-                document.getElementById(sliderId).value = Math.log((numberOfTreesInputValue + 1)/checkedTrees.length) / Math.log(sliderScalar);
-                updateTreeQuantity(sliderId, sliderId + 'Output');
-            });
-
-            // Recalculate results
-            calculateResults();
+            createTreeSliders(numberOfTreesInputValue);
         });
 
         // Function to update tree quantity based on budget
@@ -231,7 +214,7 @@
         }
 
         // Event listener for budget input
-        document.getElementById('budgetInput').addEventListener('input', function() {
+        document.getElementById('budgetInput').addEventListener('input', function () {
             const budgetInputValue = parseFloat(this.value) || 0;
 
             // Enable at least one tree if none are checked
@@ -244,14 +227,14 @@
             // Calculate the adjusted number of trees based on budget
             checkedTrees.forEach(treeId => {
                 const sliderId = treeId.replace('Checkbox', '');
-                const pricePerTree = getPricePerTree(sliderId); // Define this function to get the price per tree
+                const pricePerTree = getPricePerTree(sliderId);
 
                 // Adjusted tree quantity based on budget and price per tree and number of tree types enabled
                 const adjustedTreeQuantity = Math.floor(budgetInputValue / pricePerTree) / checkedTrees.length;
-                
+
                 // Update the slider and tree quantity output
                 document.getElementById(sliderId).value = Math.log(adjustedTreeQuantity + 1) / Math.log(sliderScalar);
-                updateTreeQuantity(sliderId, sliderId + 'Output');
+                updateTreeQuantity(sliderId, `${sliderId}Output`);
             });
 
             // Recalculate results
@@ -273,7 +256,7 @@
         }
 
         // Initial calculations
-        createTreeSliders(3); // Set the initial number of tree sliders
+        createTreeSliders(numTrees); // Set the initial number of tree sliders
         calculateResults();
     </script>
 </body>
