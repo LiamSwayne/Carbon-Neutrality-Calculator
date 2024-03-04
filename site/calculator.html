@@ -73,7 +73,7 @@
         &nbsp;$
     </div>
 
-    <h2>Calculator Results</h2>
+    <h2>Results</h2>
 
     <div class="result-section">
         <div id="resultCO2Label">Net CO2 Emissions:&nbsp;</div>
@@ -91,10 +91,19 @@
             const checkbox = document.getElementById(treeId + 'Checkbox');
             const slider = document.getElementById(treeId);
             slider.disabled = !checkbox.checked;
-            if (!checkbox.checked) {
+
+            if (checkbox.checked) {
+                // Enable the slider when the checkbox is checked
+                slider.value = 0; // Reset the slider value
+                updateTreeQuantity(treeId, treeId + 'Output');
+            } else {
+                // Disable the slider and update quantity when the checkbox is unchecked
                 slider.value = 0;
                 updateTreeQuantity(treeId, treeId + 'Output');
             }
+
+            // Recalculate results
+            calculateResults();
         }
 
         // Function to update tree quantity output
@@ -168,19 +177,19 @@
             const checkedTrees = ['tree1Checkbox', 'tree2Checkbox', 'tree3Checkbox'].filter(id => document.getElementById(id).checked);
             if (checkedTrees.length === 0) {
                 document.getElementById('tree1Checkbox').checked = true;
+                toggleTree('tree1');
             }
 
             // Scale up the checked trees
             checkedTrees.forEach(treeId => {
                 const sliderId = treeId.replace('Checkbox', '');
-                document.getElementById(sliderId).value = Math.log(costInputValue + 1) / Math.log(hundrethRootOf100001);
+                document.getElementById(sliderId).value = Math.log((costInputValue + 1)/checkedTrees.length) / Math.log(hundrethRootOf100001);
                 updateTreeQuantity(sliderId, sliderId + 'Output');
             });
 
             // Recalculate results
             calculateResults();
         });
-
 
         // Initial calculations
         calculateResults();
