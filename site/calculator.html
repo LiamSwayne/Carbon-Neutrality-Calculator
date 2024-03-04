@@ -16,6 +16,7 @@
 
         .tree-slider {
             margin-bottom: 30px;
+            background-color: #aaaaaa;
         }
 
         .result-section, .input-section {
@@ -46,31 +47,31 @@
         &nbsp;tons
     </div>
 
+    <div class="input-section">
+        <label for="numberOfTreesInput">Number of trees:&nbsp;</label>
+        <input type="number" id="numberOfTreesInput" placeholder="Enter number of trees" aria-labelledby="numberOfTreesLabel" />
+        &nbsp;$
+    </div>
+
     <div class="tree-slider">
         <input type="checkbox" id="tree1Checkbox" onclick="toggleTree('tree1')" />
         <label for="tree1Checkbox">Enable Tree Type 1</label>
-        <input type="range" id="tree1" min="0" max="100" step="1" value="0" aria-labelledby="tree1Label" disabled />
+        <input type="range" id="tree1" min="0" max="1000" step="1" value="0" aria-labelledby="tree1Label" disabled />
         <output id="tree1Output">0 trees</output>
     </div>
 
     <div class="tree-slider">
         <input type="checkbox" id="tree2Checkbox" onclick="toggleTree('tree2')" />
         <label for="tree2Checkbox">Enable Tree Type 2</label>
-        <input type="range" id="tree2" min="0" max="100" step="1" value="0" aria-labelledby="tree2Label" disabled />
+        <input type="range" id="tree2" min="0" max="1000" step="1" value="0" aria-labelledby="tree2Label" disabled />
         <output id="tree2Output">0 trees</output>
     </div>
 
     <div class="tree-slider">
         <input type="checkbox" id="tree3Checkbox" onclick="toggleTree('tree3')" />
         <label for="tree3Checkbox">Enable Tree Type 3</label>
-        <input type="range" id="tree3" min="0" max="100" step="1" value="0" aria-labelledby="tree3Label" disabled />
+        <input type="range" id="tree3" min="0" max="1000" step="1" value="0" aria-labelledby="tree3Label" disabled />
         <output id="tree3Output">0 trees</output>
-    </div>
-
-    <div class="input-section">
-        <label for="numberOfTreesInput">Number of trees:&nbsp;</label>
-        <input type="number" id="numberOfTreesInput" placeholder="Enter number of trees" aria-labelledby="numberOfTreesLabel" />
-        &nbsp;$
     </div>
 
     <h2>Results</h2>
@@ -86,7 +87,7 @@
     </div>
 
     <script>
-        const sliderScalar = 1.03050464163
+        const sliderScalar = 1.01157945426
 
         // Function to toggle tree slider
         function toggleTree(treeId) {
