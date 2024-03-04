@@ -129,26 +129,21 @@
             let totalCO2Reduction = 0;
             let totalPrice = 0;
 
-            // Tree 1
-            const tree1Quantity = parseInt(document.getElementById('tree1Output').textContent.split(" ")[0]) || 0;
-            const tree1CO2Absorption = 10; // replace with actual CO2 absorption rate
-            const tree1Price = 5; // replace with actual price
-            totalCO2Reduction += tree1Quantity * tree1CO2Absorption;
-            totalPrice += tree1Quantity * tree1Price;
+            // Loop through each tree type
+            for (let i = 1; i <= 3; i++) {
+                const treeId = 'tree' + i;
 
-            // Tree 2
-            const tree2Quantity = parseInt(document.getElementById('tree2Output').textContent.split(" ")[0]) || 0;
-            const tree2CO2Absorption = 15; // replace with actual CO2 absorption rate
-            const tree2Price = 8; // replace with actual price
-            totalCO2Reduction += tree2Quantity * tree2CO2Absorption;
-            totalPrice += tree2Quantity * tree2Price;
+                // Get tree quantity
+                const treeQuantity = parseInt(document.getElementById(treeId + 'Output').textContent.split(" ")[0]) || 0;
 
-            // Tree 3
-            const tree3Quantity = parseInt(document.getElementById('tree3Output').textContent.split(" ")[0]) || 0;
-            const tree3CO2Absorption = 20; // replace with actual CO2 absorption rate
-            const tree3Price = 10; // replace with actual price
-            totalCO2Reduction += tree3Quantity * tree3CO2Absorption;
-            totalPrice += tree3Quantity * tree3Price;
+                // Get CO2 absorption rate and price from getPricePerTree function
+                const treeCO2Absorption = i * 5; // Replace with actual CO2 absorption rate
+                const treePrice = getPricePerTree(treeId);
+
+                // Update total CO2 reduction and price
+                totalCO2Reduction += treeQuantity * treeCO2Absorption;
+                totalPrice += treeQuantity * treePrice;
+            }
 
             // Update results
             const resultCO2 = document.getElementById('resultCO2');
