@@ -52,6 +52,12 @@
         <input type="number" id="numberOfTreesInput" placeholder="Enter number of trees" aria-labelledby="numberOfTreesLabel" />
     </div>
 
+    <div class="input-section">
+        <label for="budgetInput">Budget:&nbsp;</label>
+        <input type="number" id="budgetInput" placeholder="Enter budget" aria-labelledby="budgetLabel" />
+        &nbsp;$
+    </div>
+
     <div class="tree-slider">
         <input type="checkbox" id="tree1Checkbox" onclick="toggleTree('tree1')" />
         <label for="tree1Checkbox">Enable Tree Type 1</label>
@@ -190,6 +196,53 @@
             // Recalculate results
             calculateResults();
         });
+
+        // Function to update tree quantity based on budget
+        function updateTreeQuantityFromBudget(sliderId, outputId) {
+            const slider = document.getElementById(sliderId);
+            const output = document.getElementById(outputId);
+            const sliderValue = Math.round(Math.pow(sliderScalar, slider.value));
+            output.textContent = `${sliderValue-1} Trees`;
+            calculateResults();
+        }
+
+        // Event listener for budget input
+        document.getElementById('budgetInput').addEventListener('input', function() {
+            const budgetInputValue = parseFloat(this.value) || 0;
+
+            // Enable at least one tree if none are checked
+            const checkedTrees = ['tree1Checkbox', 'tree2Checkbox', 'tree3Checkbox'].filter(id => document.getElementById(id).checked);
+            if (checkedTrees.length === 0) {
+                document.getElementById('tree1Checkbox').checked = true;
+                toggleTree('tree1');
+            }
+
+            // Calculate the adjusted number of trees based on budget
+            checkedTrees.forEach(treeId => {
+                const sliderId = treeId.replace('Checkbox', '');
+                const pricePerTree = getPricePerTree(sliderId); // Define this function to get the price per tree
+                const adjustedTreeQuantity = Math.floor(budgetInputValue / pricePerTree);
+                document.getElementById(sliderId).value = Math.log((adjustedTreeQuantity + 1) / checkedTrees.length) / Math.log(sliderScalar);
+                updateTreeQuantityFromBudget(sliderId, sliderId + 'Output');
+            });
+
+            // Recalculate results
+            calculateResults();
+        });
+
+        // Function to get the price per tree
+        function getPricePerTree(treeId) {
+            switch (treeId) {
+                case 'tree1':
+                    return 5; // Replace with the actual price for Tree Type 1
+                case 'tree2':
+                    return 8; // Replace with the actual price for Tree Type 2
+                case 'tree3':
+                    return 10; // Replace with the actual price for Tree Type 3
+                default:
+                    return 0;
+            }
+        }
 
         // Initial calculations
         calculateResults();
