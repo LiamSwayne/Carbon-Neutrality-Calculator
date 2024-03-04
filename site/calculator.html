@@ -67,6 +67,12 @@
         <output id="tree3Output">0 trees</output>
     </div>
 
+    <div class="input-section">
+        <label for="costInput">Cost:&nbsp;</label>
+        <input type="number" id="costInput" placeholder="Enter cost" aria-labelledby="costLabel" />
+        &nbsp;$
+    </div>
+
     <h2>Calculator Results</h2>
 
     <div class="result-section">
@@ -152,6 +158,26 @@
         document.getElementById('co2Input').addEventListener('input', function() {
             calculateResults();
         });
+
+        // Event listener for cost input
+        document.getElementById('costInput').addEventListener('input', function() {
+            const costInputValue = parseFloat(this.value) || 0;
+            const hundrethRootOf100001 = 1.1220185665;
+
+            // Scale down the tree sliders
+            document.getElementById('tree1').value = Math.log(costInputValue + 1) / Math.log(hundrethRootOf100001);
+            document.getElementById('tree2').value = Math.log(costInputValue + 1) / Math.log(hundrethRootOf100001);
+            document.getElementById('tree3').value = Math.log(costInputValue + 1) / Math.log(hundrethRootOf100001);
+
+            // Update tree quantities
+            updateTreeQuantity('tree1', 'tree1Output');
+            updateTreeQuantity('tree2', 'tree2Output');
+            updateTreeQuantity('tree3', 'tree3Output');
+
+            // Recalculate results
+            calculateResults();
+        });
+
 
         // Initial calculations
         calculateResults();
