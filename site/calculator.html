@@ -41,6 +41,7 @@
 <body>
     <h1>CO2 Emissions Calculator</h1>
 
+    <!-- Input sections for CO2 emissions, number of trees, and budget -->
     <div class="input-section">
         <label for="co2Input">CO2 Emissions:&nbsp;</label>
         <input type="number" id="co2Input" placeholder="Enter CO2 emissions" aria-labelledby="co2Label" />
@@ -58,29 +59,12 @@
         &nbsp;$
     </div>
 
-    <div class="tree-slider">
-        <input type="checkbox" id="tree1Checkbox" onclick="toggleTree('tree1')" />
-        <label for="tree1Checkbox">Enable Tree Type 1</label>
-        <input type="range" id="tree1" min="0" max="1000" step="1" value="0" aria-labelledby="tree1Label" disabled />
-        <output id="tree1Output">0 trees</output>
-    </div>
-
-    <div class="tree-slider">
-        <input type="checkbox" id="tree2Checkbox" onclick="toggleTree('tree2')" />
-        <label for="tree2Checkbox">Enable Tree Type 2</label>
-        <input type="range" id="tree2" min="0" max="1000" step="1" value="0" aria-labelledby="tree2Label" disabled />
-        <output id="tree2Output">0 trees</output>
-    </div>
-
-    <div class="tree-slider">
-        <input type="checkbox" id="tree3Checkbox" onclick="toggleTree('tree3')" />
-        <label for="tree3Checkbox">Enable Tree Type 3</label>
-        <input type="range" id="tree3" min="0" max="1000" step="1" value="0" aria-labelledby="tree3Label" disabled />
-        <output id="tree3Output">0 trees</output>
-    </div>
+    <!-- Dynamic tree sliders generated with JavaScript -->
+    <div id="treeSlidersContainer"></div>
 
     <h2>Results</h2>
 
+    <!-- Results sections for net CO2 emissions and total price -->
     <div class="result-section">
         <div id="resultCO2Label">Net CO2 Emissions:&nbsp;</div>
         <output id="resultCO2" aria-labelledby="resultCO2Label">0 tons</output>
@@ -92,7 +76,52 @@
     </div>
 
     <script>
-        const sliderScalar = 1.01157945426
+        const sliderScalar = 1.01157945426;
+
+        // Function to dynamically create tree sliders
+        function createTreeSliders(numTrees) {
+            const treeSlidersContainer = document.getElementById('treeSlidersContainer');
+            treeSlidersContainer.innerHTML = '';
+
+            for (let i = 1; i <= numTrees; i++) {
+                const treeId = `tree${i}`;
+                const checkboxId = `${treeId}Checkbox`;
+
+                // Create tree slider elements
+                const treeSlider = document.createElement('div');
+                treeSlider.className = 'tree-slider';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = checkboxId;
+                checkbox.onclick = () => toggleTree(treeId);
+
+                const label = document.createElement('label');
+                label.htmlFor = checkboxId;
+                label.textContent = `Enable Tree Type ${i}`;
+
+                const slider = document.createElement('input');
+                slider.type = 'range';
+                slider.id = treeId;
+                slider.min = '0';
+                slider.max = '1000';
+                slider.step = '1';
+                slider.value = '0';
+                slider.ariaLabelledby = `${treeId}Label`;
+                slider.disabled = true;
+
+                const output = document.createElement('output');
+                output.id = `${treeId}Output`;
+                output.textContent = '0 Trees';
+
+                // Append elements to the tree slider container
+                treeSlider.appendChild(checkbox);
+                treeSlider.appendChild(label);
+                treeSlider.appendChild(slider);
+                treeSlider.appendChild(output);
+                treeSlidersContainer.appendChild(treeSlider);
+            }
+        }
 
         // Function to toggle tree slider
         function toggleTree(treeId) {
@@ -119,7 +148,7 @@
             const slider = document.getElementById(sliderId);
             const output = document.getElementById(outputId);
             const sliderValue = Math.round(Math.pow(sliderScalar, slider.value));
-            output.textContent = `${sliderValue-1} Trees`;
+            output.textContent = `${sliderValue - 1} Trees`;
             calculateResults();
         }
 
@@ -130,8 +159,8 @@
             let totalPrice = 0;
 
             // Loop through each tree type
-            for (let i = 1; i <= 3; i++) {
-                const treeId = 'tree' + i;
+            for (let i = 1; i <= numTrees; i++) {
+                const treeId = `tree${i}`;
 
                 // Get tree quantity
                 const treeQuantity = parseInt(document.getElementById(treeId + 'Output').textContent.split(" ")[0]) || 0;
@@ -244,6 +273,7 @@
         }
 
         // Initial calculations
+        createTreeSliders(3); // Set the initial number of tree sliders
         calculateResults();
     </script>
 </body>
