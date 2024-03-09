@@ -25,7 +25,7 @@ function updateOrganizationQuantity(sliderId, outputId) {
     const slider = document.getElementById(sliderId);
     const output = document.getElementById(outputId);
     const sliderValue = Math.round(Math.pow(sliderScalar, slider.value));
-    output.textContent = `${sliderValue - 1} Donations`;
+    output.textContent = `${sliderValue - 1} Trees`;
     calculateResults();
 }
 
