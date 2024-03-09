@@ -1,15 +1,39 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+    background-color: #121212;
+    color: #ffffff;
 }
 
 input, output {
     margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    padding: 8px;
+    background-color: #1f1f1f;
+    color: #ffffff;
+}
+
+.checkbox {
+    margin-top: 14px;
+    margin-right:10px;
 }
 
 .tree-slider {
     margin-bottom: 30px;
-    background-color: #aaaaaa;
+    background-color: #333333;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex; /* Add flex display to align items horizontally */
+    align-items: center; /* Center items vertically */
+}
+
+.tree-slider label {
+    margin-right: 15px; /* Add margin for spacing between checkbox and label */
+}
+
+.tree-slider input[type="range"] {
+    flex-grow: 1; /* Allow the slider to take up remaining space */
 }
 
 .result-section, .input-section {
@@ -28,4 +52,16 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
     appearance: textfield;
+}
+
+h1, h2 {
+    color: #ffffff;
+}
+
+a {
+    color: #ffa500;
+}
+
+a:hover {
+    color: #ffd700;
 }
