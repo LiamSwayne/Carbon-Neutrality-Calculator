@@ -11,50 +11,50 @@
     <h1>CO2 Emissions Calculator</h1>
 
     <div class="input-section">
-        <label for="carbonInput">CO2 Emissions:&nbsp;</label>
-        <input type="number" id="carbonInput" placeholder="Enter CO2 emissions" aria-labelledby="carbonInputLabel" />
+        <label for="co2Input">CO2 Emissions:&nbsp;</label>
+        <input type="number" id="co2Input" placeholder="Enter CO2 emissions" aria-labelledby="co2Label" />
         &nbsp;tons
     </div>
 
     <div class="input-section">
-        <label for="treeNumberInput">Number of trees:&nbsp;</label>
-        <input type="number" id="treeNumberInput" placeholder="Enter number of trees" aria-labelledby="treeNumberInputLabel" />
+        <label for="numberOfTreesInput">Number of trees:&nbsp;</label>
+        <input type="number" id="numberOfTreesInput" placeholder="Enter number of trees" aria-labelledby="numberOfTreesLabel" />
     </div>
 
     <div class="input-section">
         <label for="budgetInput">Budget (USD):&nbsp;</label>$&nbsp;
-        <input type="number" id="budgetInput" placeholder="Enter budget" aria-labelledby="budgetInputLabel" />
+        <input type="number" id="budgetInput" placeholder="Enter budget" aria-labelledby="budgetLabel" />
     </div>
 
     <!-- National Forest Foundation -->
     <div class="tree-slider">
-        <input type="checkbox" class="checkbox" id="org1Checkbox" onclick="toggleOrganization('org1')" />
-        <label for="org1Checkbox"> <a href="https://www.nationalforests.org/tree-planting-programs" target="_blank">National Forest Foundation</a>: $1 per tree</label>
-        <input type="range" style="margin-top:16px; width:200px;" id="org1" min="0" max="1000" step="1" value="0" aria-labelledby="org1Label" disabled />
-        <output style="margin-top:16px; margin-left: 8px;" id="org1Output">0 trees</output>
+        <input type="checkbox" class="checkbox" id="organization1Checkbox" onclick="toggleOrganization('organization1')" />
+        <label for="organization1Checkbox"> <a href="https://www.nationalforests.org/tree-planting-programs" target="_blank">National Forest Foundation</a>: $1 per tree</label>
+        <input type="range" style="margin-top:16px; width:200px;" id="organization1" min="0" max="1000" step="1" value="0" aria-labelledby="organization1Label" disabled />
+        <output style="margin-top:16px; margin-left: 8px;" id="organization1Output">0 trees</output>
     </div>
 
     <!-- #TeamTrees -->
     <div class="tree-slider">
-        <input type="checkbox" class="checkbox" id="org2Checkbox" onclick="toggleOrganization('org2')" />
-        <label for="org2Checkbox"><a href="https://teamtrees.org/" target="_blank">#TeamTrees</a>: $1 per tree</label>
-        <input type="range" style="margin-top:16px; width:200px;" id="org2" min="0" max="1000" step="1" value="0" aria-labelledby="org2Label" disabled />
-        <output style="margin-top:16px; margin-left: 8px;" id="org2Output">0 trees</output>
+        <input type="checkbox" class="checkbox" id="organization2Checkbox" onclick="toggleOrganization('organization2')" />
+        <label for="organization2Checkbox"><a href="https://teamtrees.org/" target="_blank">#TeamTrees</a>: $1 per tree</label>
+        <input type="range" style="margin-top:16px; width:200px;" id="organization2" min="0" max="1000" step="1" value="0" aria-labelledby="organization2Label" disabled />
+        <output style="margin-top:16px; margin-left: 8px;" id="organization2Output">0 trees</output>
     </div>
 
     <!-- One Tree Planted -->
     <div class="tree-slider">
-        <input type="checkbox" class="checkbox" id="org3Checkbox" onclick="toggleOrganization('org3')" />
-        <label for="org3Checkbox"><a href="https://onetreeplanted.org/products/plant-trees" target="_blank">One Tree Planted</a>: $1 per tree</label>
-        <input type="range" style="margin-top:16px; width:200px;" id="org3" min="0" max="1000" step="1" value="0" aria-labelledby="org3Label" disabled />
-        <output style="margin-top:16px; margin-left: 8px;" id="org3Output">0 trees</output>
+        <input type="checkbox" class="checkbox" id="organization3Checkbox" onclick="toggleOrganization('organization3')" />
+        <label for="organization3Checkbox"><a href="https://onetreeplanted.org/products/plant-trees" target="_blank">One Tree Planted</a>: $1 per tree</label>
+        <input type="range" style="margin-top:16px; width:200px;" id="organization3" min="0" max="1000" step="1" value="0" aria-labelledby="organization3Label" disabled />
+        <output style="margin-top:16px; margin-left: 8px;" id="organization3Output">0 trees</output>
     </div>
 
     <h2>Results</h2>
 
     <div class="result-section">
-        <div id="carbonResultLabel">Net CO2 Emissions:&nbsp;</div>
-        <output id="carbonResult" aria-labelledby="carbonResultLabel">0 tons</output>
+        <div id="resultCO2Label">Net CO2 Emissions:&nbsp;</div>
+        <output id="resultCO2" aria-labelledby="resultCO2Label">0 tons</output>
     </div>
 
     <div class="result-section">

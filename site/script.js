@@ -1,16 +1,18 @@
 const sliderScalar = 1.01157945426;
 
-function toggleOrganization(orgId) {
-    const checkbox = document.getElementById(orgId + 'Checkbox');
-    const slider = document.getElementById(orgId);
+// Toggle organization slider
+function toggleOrganization(organizationId) {
+    const checkbox = document.getElementById(organizationId + 'Checkbox');
+    const slider = document.getElementById(organizationId);
     const isChecked = checkbox.checked;
     slider.disabled = !isChecked;
 
-    slider.value = 0;
-    updateOrganizationQuantity(orgId, orgId + 'Output');
+    slider.value = 0; // Reset slider value
+    updateOrganizationQuantity(organizationId, organizationId + 'Output');
     calculateResults();
 }
 
+// Update organization quantity output
 function updateOrganizationQuantity(sliderId, outputId) {
     const slider = document.getElementById(sliderId);
     const output = document.getElementById(outputId);
@@ -19,85 +21,101 @@ function updateOrganizationQuantity(sliderId, outputId) {
     calculateResults();
 }
 
+// Calculate and update results
 function calculateResults() {
-    const carbonInput = parseFloat(document.getElementById('carbonInput').value) || 0;
-    let totalCarbonReduction = 0;
+    const co2Input = parseFloat(document.getElementById('co2Input').value) || 0;
+    let totalCO2Reduction = 0;
     let totalPrice = 0;
 
     for (let i = 1; i <= 3; i++) {
-        const orgId = 'org' + i;
-        const orgQuantity = parseInt(document.getElementById(orgId + 'Output').textContent.split(" ")[0]) || 0;
-        const orgAbsorption = i * 5;
-        const orgPrice = getPricePerOrganization(orgId);
+        const organizationId = 'organization' + i;
+        const organizationQuantity = parseInt(document.getElementById(organizationId + 'Output').textContent.split(" ")[0]) || 0;
+        const organizationCO2Absorption = i * 5; // Replace with actual CO2 absorption rate
+        const organizationPrice = getPricePerOrganization(organizationId);
 
-        totalCarbonReduction += orgQuantity * orgAbsorption;
-        totalPrice += orgQuantity * orgPrice;
+        totalCO2Reduction += organizationQuantity * organizationCO2Absorption;
+        totalPrice += organizationQuantity * organizationPrice;
     }
 
-    const carbonResult = document.getElementById('carbonResult');
+    const resultCO2 = document.getElementById('resultCO2');
     const totalPriceOutput = document.getElementById('totalPrice');
-    carbonResult.textContent = `${carbonInput - totalCarbonReduction} tons`;
+    resultCO2.textContent = `${co2Input - totalCO2Reduction} tons`;
     totalPriceOutput.textContent = `$${totalPrice}`;
 }
 
+// Event listener for organization sliders
 for (let i = 1; i <= 3; i++) {
-    const orgId = 'org' + i;
-    document.getElementById(orgId).addEventListener('input', function () {
-        updateOrganizationQuantity(orgId, orgId + 'Output');
+    const organizationId = 'organization' + i;
+    document.getElementById(organizationId).addEventListener('input', function () {
+        updateOrganizationQuantity(organizationId, organizationId + 'Output');
     });
 }
 
-document.getElementById('carbonInput').addEventListener('input', calculateResults);
+// Event listener for CO2 input
+document.getElementById('co2Input').addEventListener('input', calculateResults);
 
+// Event listener for number of trees input
 document.getElementById('numberOfTreesInput').addEventListener('input', function () {
-    const treeNumberInputValue = parseFloat(this.value) || 0;
-    const checkedOrgs = ['org1Checkbox', 'org2Checkbox', 'org3Checkbox'].filter(id => document.getElementById(id).checked);
+    const numberOfTreesInputValue = parseFloat(this.value) || 0;
+    const checkedOrganizations = ['organization1Checkbox', 'organization2Checkbox', 'organization3Checkbox'].filter(id => document.getElementById(id).checked);
 
-    if (checkedOrgs.length === 0) {
-        document.getElementById('org1Checkbox').checked = true;
-        toggleOrganization('org1');
+    if (checkedOrganizations.length === 0) {
+        document.getElementById('organization1Checkbox').checked = true;
+        toggleOrganization('organization1');
     }
 
-    checkedOrgs.forEach(orgId => {
-        const sliderId = orgId.replace('Checkbox', '');
-        document.getElementById(sliderId).value = Math.log((treeNumberInputValue + 1) / checkedOrgs.length) / Math.log(sliderScalar);
+    checkedOrganizations.forEach(organizationId => {
+        const sliderId = organizationId.replace('Checkbox', '');
+        document.getElementById(sliderId).value = Math.log((numberOfTreesInputValue + 1) / checkedOrganizations.length) / Math.log(sliderScalar);
         updateOrganizationQuantity(sliderId, sliderId + 'Output');
     });
 
     calculateResults();
 });
 
+// Update organization quantity based on budget
+function updateOrganizationQuantityFromBudget(sliderId, outputId) {
+    const slider = document.getElementById(sliderId);
+    const output = document.getElementById(outputId);
+    const sliderValue = Math.round(Math.pow(sliderScalar, slider.value));
+    output.textContent = `${sliderValue - 1} Donations`;
+    calculateResults();
+}
+
+// Event listener for budget input
 document.getElementById('budgetInput').addEventListener('input', function () {
     const budgetInputValue = parseFloat(this.value) || 0;
-    const checkedOrgs = ['org1Checkbox', 'org2Checkbox', 'org3Checkbox'].filter(id => document.getElementById(id).checked);
+    const checkedOrganizations = ['organization1Checkbox', 'organization2Checkbox', 'organization3Checkbox'].filter(id => document.getElementById(id).checked);
 
-    if (checkedOrgs.length === 0) {
-        document.getElementById('org1Checkbox').checked = true;
-        toggleOrganization('org1');
+    if (checkedOrganizations.length === 0) {
+        document.getElementById('organization1Checkbox').checked = true;
+        toggleOrganization('organization1');
     }
 
-    checkedOrgs.forEach(orgId => {
-        const sliderId = orgId.replace('Checkbox', '');
-        const pricePerOrg = getPricePerOrganization(sliderId);
+    checkedOrganizations.forEach(organizationId => {
+        const sliderId = organizationId.replace('Checkbox', '');
+        const pricePerOrganization = getPricePerOrganization(sliderId);
+        const adjustedOrganizationQuantity = Math.floor(budgetInputValue / pricePerOrganization) / checkedOrganizations.length;
 
-        const adjustedOrgQuantity = Math.floor(budgetInputValue / pricePerOrg) / checkedOrgs.length;
-        document.getElementById(sliderId).value = Math.log(adjustedOrgQuantity + 1) / Math.log(sliderScalar);
+        document.getElementById(sliderId).value = Math.log(adjustedOrganizationQuantity + 1) / Math.log(sliderScalar);
         updateOrganizationQuantity(sliderId, sliderId + 'Output');
     });
 
     calculateResults();
 });
 
-function getPricePerOrganization(orgId) {
-    switch (orgId) {
-        case 'org1':
-        case 'org2':
-        case 'org3':
-            return 1;
+// Function to get the price per organization
+function getPricePerOrganization(organizationId) {
+    switch (organizationId) {
+        case 'organization1':
+        case 'organization2':
+        case 'organization3':
+            return 1; // Assume all organizations have the same price
         default:
-            console.error(`Unknown organizationId: ${orgId}`);
+            console.error(`Unknown organizationId: ${organizationId}`);
             return 0;
     }
 }
 
+// Initial calculations
 calculateResults();
