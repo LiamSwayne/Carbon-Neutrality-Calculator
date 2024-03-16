@@ -1,64 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta tags for character set and viewport -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Title of the page -->
     <title>CO2 Emissions Calculator</title>
+    
+    <!-- Link to external stylesheet -->
     <link rel="stylesheet" href="./styles.css">
+    
+    <!-- Script tag for JavaScript file, deferred loading -->
     <script defer src="./script.js"></script>
 </head>
 <body>
+    <!-- Main heading -->
     <h1>CO2 Emissions Calculator</h1>
 
+    <!-- Input section for CO2 emissions -->
     <div class="input-section">
         <label for="co2Input">CO2 Emissions:&nbsp;</label>
+        <!-- Input field for CO2 emissions -->
         <input type="number" id="co2Input" placeholder="Enter CO2 emissions" aria-labelledby="co2Label" />
+        <!-- Unit for CO2 emissions -->
         &nbsp;tons
     </div>
 
+    <!-- Input section for number of trees -->
     <div class="input-section">
         <label for="numberOfTreesInput">Number of trees:&nbsp;</label>
+        <!-- Input field for number of trees -->
         <input type="number" id="numberOfTreesInput" placeholder="Enter number of trees" aria-labelledby="numberOfTreesLabel" />
     </div>
 
+    <!-- Input section for budget -->
     <div class="input-section">
         <label for="budgetInput">Budget (USD):&nbsp;</label>$&nbsp;
+        <!-- Input field for budget -->
         <input type="number" id="budgetInput" placeholder="Enter budget" aria-labelledby="budgetLabel" />
     </div>
 
-    <!-- National Forest Foundation -->
+    <!-- Slider for National Forest Foundation -->
     <div class="tree-slider">
+        <!-- Checkbox to enable/disable organization -->
         <input type="checkbox" class="checkbox" id="organization1Checkbox" onclick="toggleOrganization('organization1')" />
+        <!-- Label for National Forest Foundation with link -->
         <label for="organization1Checkbox"> <a href="https://www.nationalforests.org/tree-planting-programs" target="_blank">National Forest Foundation</a>: $1 per tree</label>
+        <!-- Slider input for selecting number of trees -->
         <input type="range" style="margin-top:16px; width:200px;" id="organization1" min="0" max="1000" step="1" value="0" aria-labelledby="organization1Label" disabled />
+        <!-- Output for displaying selected number of trees -->
         <output style="margin-top:16px; margin-left: 8px;" id="organization1Output">0 trees</output>
     </div>
 
-    <!-- #TeamTrees -->
+    <!-- Slider for #TeamTrees -->
     <div class="tree-slider">
+        <!-- Checkbox to enable/disable organization -->
         <input type="checkbox" class="checkbox" id="organization2Checkbox" onclick="toggleOrganization('organization2')" />
+        <!-- Label for #TeamTrees with link -->
         <label for="organization2Checkbox"><a href="https://teamtrees.org/" target="_blank">#TeamTrees</a>: $1 per tree</label>
+        <!-- Slider input for selecting number of trees -->
         <input type="range" style="margin-top:16px; width:200px;" id="organization2" min="0" max="1000" step="1" value="0" aria-labelledby="organization2Label" disabled />
+        <!-- Output for displaying selected number of trees -->
         <output style="margin-top:16px; margin-left: 8px;" id="organization2Output">0 trees</output>
     </div>
 
-    <!-- One Tree Planted -->
+    <!-- Slider for One Tree Planted -->
     <div class="tree-slider">
+        <!-- Checkbox to enable/disable organization -->
         <input type="checkbox" class="checkbox" id="organization3Checkbox" onclick="toggleOrganization('organization3')" />
+        <!-- Label for One Tree Planted with link -->
         <label for="organization3Checkbox"><a href="https://onetreeplanted.org/products/plant-trees" target="_blank">One Tree Planted</a>: $1 per tree</label>
+        <!-- Slider input for selecting number of trees -->
         <input type="range" style="margin-top:16px; width:200px;" id="organization3" min="0" max="1000" step="1" value="0" aria-labelledby="organization3Label" disabled />
+        <!-- Output for displaying selected number of trees -->
         <output style="margin-top:16px; margin-left: 8px;" id="organization3Output">0 trees</output>
     </div>
 
+    <!-- Results section heading -->
     <h2>Results</h2>
 
+    <!-- Result section for net CO2 emissions -->
     <div class="result-section">
+        <!-- Label for net CO2 emissions -->
         <div id="resultCO2Label">Net CO2 Emissions:&nbsp;</div>
+        <!-- Output for displaying net CO2 emissions -->
         <output id="resultCO2" aria-labelledby="resultCO2Label">0 tons</output>
     </div>
 
+    <!-- Result section for total price -->
     <div class="result-section">
+        <!-- Label for total price -->
         <div id="totalPriceLabel">Total Price:&nbsp;</div>
+        <!-- Output for displaying total price -->
         <output id="totalPrice" aria-labelledby="totalPriceLabel">$0</output>
     </div>
 </body>
