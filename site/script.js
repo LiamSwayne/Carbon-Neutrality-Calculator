@@ -11,20 +11,17 @@ function toggleOrganization(organizationId) {
     slider.disabled = !isChecked;
     // Reset slider value and update organization quantity
     slider.value = 0;
-    updateOrganizationQuantity(organizationId, organizationId + 'Output');
+    updateOrganizationQuantity(organizationId);
     // Recalculate results
     calculateResults();
 }
 
 // Update organization quantity output
-function updateOrganizationQuantity(sliderId, outputId) {
-    // Get slider and output elements
-    const slider = document.getElementById(sliderId);
-    const output = document.getElementById(outputId);
-    // Calculate slider value and update output text
+function updateOrganizationQuantity(organizationId) {
+    const slider = document.getElementById(organizationId);
+    const output = document.getElementById(`${organizationId}Output`);
     const sliderValue = Math.round(Math.pow(sliderScalar, slider.value));
     output.textContent = `${sliderValue - 1} Trees`;
-    // Recalculate results
     calculateResults();
 }
 
@@ -59,7 +56,7 @@ for (let i = 1; i <= 3; i++) {
     const organizationId = 'organization' + i;
     // Update organization quantity when slider value changes
     document.getElementById(organizationId).addEventListener('input', function () {
-        updateOrganizationQuantity(organizationId, organizationId + 'Output');
+        updateOrganizationQuantity(organizationId);
     });
 }
 
@@ -83,7 +80,7 @@ document.getElementById('numberOfTreesInput').addEventListener('input', function
     checkedOrganizations.forEach(organizationId => {
         const sliderId = organizationId.replace('Checkbox', '');
         document.getElementById(sliderId).value = Math.log((numberOfTreesInputValue + 1) / checkedOrganizations.length) / Math.log(sliderScalar);
-        updateOrganizationQuantity(sliderId, sliderId + 'Output');
+        updateOrganizationQuantity(sliderId);
     });
 
     // Recalculate results
@@ -110,7 +107,7 @@ document.getElementById('budgetInput').addEventListener('input', function () {
         const adjustedOrganizationQuantity = Math.floor(budgetInputValue / pricePerOrganization) / checkedOrganizations.length;
 
         document.getElementById(sliderId).value = Math.log(adjustedOrganizationQuantity + 1) / Math.log(sliderScalar);
-        updateOrganizationQuantity(sliderId, sliderId + 'Output');
+        updateOrganizationQuantity(sliderId);
     });
 
     // Recalculate results
